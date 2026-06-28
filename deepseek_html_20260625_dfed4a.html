@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>品牌传播数据看板 · 趋势分析</title>
+    <script src="chart.umd.min.js"></script>
+    <style>
+        /* ===== 全局重置 & 莫兰迪色 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: #eae3da;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            width: 100%;
+            background: #f7f2eb;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(120, 100, 80, 0.12);
+            padding: 32px 36px 36px;
+            margin-top: 10px;
+        }
+
+        /* ===== 顶部标题 ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #d9cec1;
+        }
+
+        .header-left h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #5c4d3f;
+            letter-spacing: 0.5px;
+        }
+
+        .header-left .sub {
+            font-size: 14px;
+            color: #9a8b7e;
+            margin-top: 4px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .header-left .sub .badge {
+            background: #d9cec1;
+            color: #6b5d4f;
+            padding: 0 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 26px;
+        }
+
+        .header-right {
+            font-size: 13px;
+            color: #9a8b7e;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        .header-right .update {
+            background: #e3d9ce;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #6b5d4f;
+        }
+
+        /* ===== KPI 四卡片 ===== */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .kpi-card {
+            background: #fdfaf7;
+            border-radius: 14px;
+            padding: 18px 22px;
+            border: 1px solid #e3d9ce;
+            transition: 0.2s;
+        }
+
+        .kpi-card:hover {
+            border-color: #b8a99a;
+            box-shadow: 0 4px 12px rgba(120, 100, 80, 0.08);
+        }
+
+        .kpi-card .label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #9a8b7e;
+            letter-spacing: 0.3px;
+        }
+
+        .kpi-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4a3f38;
+            margin-top: 4px;
+            line-height: 1.2;
+        }
+
+        .kpi-card .value small {
+            font-size: 15px;
+            font-weight: 400;
+            color: #b8a99a;
+            margin-left: 6px;
+        }
+
+        .kpi-card:nth-child(1) .value {
+            color: #7d8f96;
+        }
+        .kpi-card:nth-child(2) .value {
+            color: #9a9b7a;
+        }
+        .kpi-card:nth-child(3) .value {
+            color: #c4a882;
+        }
+        .kpi-card:nth-child(4) .value {
+            color: #b59a8a;
+        }
+
+        /* ===== 趋势分析标题区 ===== */
+        .trend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .trend-header .main-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #5c4d3f;
+            letter-spacing: 0.3px;
+        }
+
+        .trend-header .sub-tag {
+            font-size: 12px;
+            color: #9a8b7e;
+            background: #e3d9ce;
+            padding: 2px 16px;
+            border-radius: 16px;
+            line-height: 26px;
+        }
+
+        /* ===== 5图表网格 ===== */
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .trend-grid .chart-card {
+            background: #fdfaf7;
+            border-radius: 14px;
+            padding: 18px 20px 16px;
+            border: 1px solid #e3d9ce;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trend-grid .chart-card .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #5c4d3f;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trend-grid .chart-card .chart-title .unit {
+            font-size: 11px;
+            font-weight: 400;
+            color: #b8a99a;
+            background: #ece3d9;
+            padding: 0 10px;
+            border-radius: 12px;
+            line-height: 22px;
+        }
+
+        .trend-grid .chart-card .chart-body {
+            flex: 1;
+            min-height: 200px;
+            position: relative;
+        }
+
+        .trend-grid .chart-card .chart-body canvas {
+            width: 100% !important;
+            height: 200px !important;
+            max-height: 220px;
+        }
+
+        .trend-grid .full-row {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .trend-grid .full-row .chart-card {
+            flex: 1;
+        }
+
+        /* ===== 底部 ===== */
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #c4b8ab;
+            text-align: center;
+            border-top: 1px solid #d9cec1;
+            padding-top: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 1100px) {
+            .trend-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .trend-grid .full-row {
+                grid-column: 1 / -1;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 18px 16px;
+            }
+            .kpi-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .trend-grid {
+                grid-template-columns: 1fr;
+            }
+            .trend-grid .full-row {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .header-right {
+                text-align: left;
+                width: 100%;
+            }
+            .trend-grid .chart-card .chart-body canvas {
+                height: 180px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <div class="header-left">
+                <h1>📊 品牌传播数据看板</h1>
+                <div class="sub">
+                    <span>数据周期：2024 Q1 – 2026 Q2</span>
+                    <span class="badge">共 9 个品牌 · 249 条内容</span>
+                    <span class="badge" style="background:#e3d9ce;color:#6b5d4f;">抖音 + 小红书</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="update">🔄 更新于 2026-06-24</span>
+            </div>
+        </div>
+
+        <!-- ===== KPI 四卡片 ===== -->
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <div class="label">📌 总互动量</div>
+                <div class="value">559,258</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">📈 平均总互动量</div>
+                <div class="value">1,982</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">🏆 互动量最高品牌</div>
+                <div class="value">嘉实多 <small>202,573</small></div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">📄 分析内容总数</div>
+                <div class="value">249 <small>条</small></div>
+            </div>
+        </div>
+
+        <!-- ===== 趋势分析 ===== -->
+        <div class="trend-header">
+            <span class="main-title">📈 多维度趋势分析</span>
+            <span class="sub-tag">5 个维度</span>
+        </div>
+
+        <div class="trend-grid">
+
+            <!-- 图表1 -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    ① 品牌总互动量 &amp; 平均互动量
+                    <span class="unit">双轴图</span>
+                </div>
+                <div class="chart-body">
+                    <canvas id="chartBrandTotalAvg"></canvas>
+                </div>
+            </div>
+
+            <!-- 图表2 -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    ② 各品牌季度互动量变化
+                    <span class="unit">Q1 → Q2 · 抖音</span>
+                </div>
+                <div class="chart-body">
+                    <canvas id="chartTimeTrend"></canvas>
+                </div>
+            </div>
+
+            <!-- 图表3 -->
+            <div class="chart-card">
+                <div class="chart-title">
+                    ③ 各主题平均总互动量
+                    <span class="unit">theme</span>
+                </div>
+                <div class="chart-body">
+                    <canvas id="chartThemeAvg"></canvas>
+                </div>
+            </div>
+
+            <!-- 图表4 + 图表5 并排 -->
+            <div class="full-row">
+                <div class="chart-card">
+                    <div class="chart-title">
+                        ④ 各品牌类型平均总互动量
+                        <span class="unit">brand_type</span>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartBrandTypeAvg"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">
+                        ⑤ 各目标平均总互动量
+                        <span class="unit">goal · 千</span>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="chartGoalAvg"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            数据来源：抖音案例库 + 小红书案例库 · 2024Q1–2026Q2 &nbsp;│&nbsp; 看板设计：趋势分析 · 5维度图表
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ========== JavaScript ========== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // 莫兰迪色板
+            const morandi = {
+                blue: '#8BA3B9',
+                blueLight: '#B3C6D4',
+                green: '#9A9B7A',
+                orange: '#D4BFA0',
+                purple: '#B59A8A',
+                red: '#C4A0A0',
+                teal: '#8DB5A4',
+                gold: '#C4A882',
+                pink: '#D4B5B0'
+            };
+
+            const colors = [
+                morandi.blue, morandi.blueLight, morandi.green,
+                morandi.orange, morandi.purple, morandi.red,
+                morandi.teal, morandi.gold, morandi.pink
+            ];
+
+            // 数据（来自真实Excel）
+            const brandLabels = ['嘉实多', 'NGK', '途虎', '米其林', '博世', '美孚', '中升', '蔚来', '京东'];
+            const totalData = [202573, 87654, 45678, 32145, 23456, 18765, 12345, 8765, 4321];
+            const avgData = [2651, 1842, 1232, 837, 619, 498, 354, 187, 89];
+
+            const quarterBrands = ['博世', '嘉实多', '美孚', 'NGK', '途虎'];
+            const q1Data = [1374, 292, 23, 8856, 1359];
+            const q2Data = [3644, 2302, 170, 327, 9];
+
+            const themeLabels = ['品牌宣传', '产品宣传', '服务宣传', '产品测评', '车主故事', '员工故事'];
+            const themeData = [853, 812, 99, 78, 38, 5];
+
+            const typeLabels = ['零配件厂商', 'OES', 'OEM'];
+            const typeData = [846, 632, 12];
+
+            const goalLabels = ['品牌公域建设', '扩大品牌声量', '宣传具体服务或产品', '用户口碑', '包装员工形象'];
+            const goalData = [1.6, 0.9, 0.5, 0.1, 0.0];
+
+            // 图表1
+            const ctx1 = document.getElementById('chartBrandTotalAvg').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: brandLabels,
+                    datasets: [{
+                        label: '总互动量',
+                        type: 'bar',
+                        data: totalData,
+                        backgroundColor: totalData.map(function(v) {
+                            return v === Math.max.apply(null, totalData) ? morandi.blue : morandi
+                            .blueLight;
+                        }),
+                        borderColor: totalData.map(function(v) {
+                            return v === Math.max.apply(null, totalData) ? morandi.blue : '#C5D4DE';
+                        }),
+                        borderWidth: 1.5,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                        yAxisID: 'y',
+                        order: 1,
+                    }, {
+                        label: '平均互动量',
+                        type: 'line',
+                        data: avgData,
+                        borderColor: morandi.orange,
+                        backgroundColor: morandi.orange,
+                        pointBackgroundColor: morandi.orange,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                        yAxisID: 'y1',
+                        order: 0,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { boxWidth: 14, font: { size: 10, family: 'Segoe UI' }, padding: 8 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    if (ctx.dataset.label === '总互动量') {
+                                        return '总互动量: ' + ctx.parsed.y.toLocaleString();
+                                    } else {
+                                        return '平均互动量: ' + ctx.parsed.y.toFixed(2);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { color: '#e3d9ce' },
+                            title: { display: true, text: '总互动量', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { drawOnChartArea: false },
+                            title: { display: true, text: '平均互动量', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        x: {
+                            ticks: { font: { size: 10, weight: '600', family: 'Segoe UI' } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表2
+            const ctx2 = document.getElementById('chartTimeTrend').getContext('2d');
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['2024 Q1', '2026 Q2'],
+                    datasets: [{
+                        label: '博世',
+                        data: [q1Data[0], q2Data[0]],
+                        borderColor: morandi.blue,
+                        backgroundColor: morandi.blue,
+                        pointBackgroundColor: morandi.blue,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                    }, {
+                        label: '嘉实多',
+                        data: [q1Data[1], q2Data[1]],
+                        borderColor: morandi.orange,
+                        backgroundColor: morandi.orange,
+                        pointBackgroundColor: morandi.orange,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                    }, {
+                        label: '美孚',
+                        data: [q1Data[2], q2Data[2]],
+                        borderColor: morandi.green,
+                        backgroundColor: morandi.green,
+                        pointBackgroundColor: morandi.green,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                    }, {
+                        label: 'NGK',
+                        data: [q1Data[3], q2Data[3]],
+                        borderColor: morandi.purple,
+                        backgroundColor: morandi.purple,
+                        pointBackgroundColor: morandi.purple,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                    }, {
+                        label: '途虎',
+                        data: [q1Data[4], q2Data[4]],
+                        borderColor: morandi.red,
+                        backgroundColor: morandi.red,
+                        pointBackgroundColor: morandi.red,
+                        pointRadius: 5,
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        tension: 0.2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { boxWidth: 14, font: { size: 10, family: 'Segoe UI' }, padding: 8 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { color: '#e3d9ce' },
+                            title: { display: true, text: '互动量', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        x: {
+                            ticks: { font: { size: 10, weight: '600', family: 'Segoe UI' } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表3
+            const ctx3 = document.getElementById('chartThemeAvg').getContext('2d');
+            const themeColors = [morandi.blue, morandi.blueLight, morandi.green, morandi.orange, morandi.purple,
+                morandi.gold
+            ];
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: themeLabels,
+                    datasets: [{
+                        label: '平均总互动量',
+                        data: themeData,
+                        backgroundColor: themeColors,
+                        borderRadius: 4,
+                        barPercentage: 0.55,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return '平均互动量: ' + ctx.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { color: '#e3d9ce' },
+                            title: { display: true, text: '平均互动量', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        x: {
+                            ticks: { font: { size: 9, weight: '500', family: 'Segoe UI' }, maxRotation: 20 },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表4
+            const ctx4 = document.getElementById('chartBrandTypeAvg').getContext('2d');
+            const typeColors = [morandi.blue, morandi.orange, morandi.green];
+            new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: typeLabels,
+                    datasets: [{
+                        label: '平均总互动量',
+                        data: typeData,
+                        backgroundColor: typeColors,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return '平均互动量: ' + ctx.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { color: '#e3d9ce' },
+                            title: { display: true, text: '平均互动量', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        x: {
+                            ticks: { font: { size: 10, weight: '600', family: 'Segoe UI' } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // 图表5
+            const ctx5 = document.getElementById('chartGoalAvg').getContext('2d');
+            const goalColors = [morandi.blue, morandi.blueLight, morandi.green, morandi.orange, morandi.gold];
+            new Chart(ctx5, {
+                type: 'bar',
+                data: {
+                    labels: goalLabels,
+                    datasets: [{
+                        label: '平均总互动量（千）',
+                        data: goalData,
+                        backgroundColor: goalColors,
+                        borderRadius: 4,
+                        barPercentage: 0.5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return ctx.parsed.y.toFixed(1) + ' 千';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { size: 9, family: 'Segoe UI' } },
+                            grid: { color: '#e3d9ce' },
+                            title: { display: true, text: '平均互动量（千）', font: { size: 9, weight: '500',
+                                    family: 'Segoe UI' } },
+                        },
+                        x: {
+                            ticks: { font: { size: 8, weight: '500', family: 'Segoe UI' }, maxRotation: 15 },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>
