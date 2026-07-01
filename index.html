@@ -4,849 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>奔驰售后案例库 · 紧凑浮窗</title>
-    <!-- PPT生成库 - 本地完整版 -->
     <script src="/pptxgen.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #FFFFFF;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #1a1e24;
-            line-height: 1.5;
-            padding: 2rem 1.5rem;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .main-title {
-            font-size: 2.4rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-            color: #101214;
-            position: relative;
-            display: inline-block;
-        }
-
-        .main-title::after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 4px;
-            background: #f15a23;
-            border-radius: 4px;
-            margin-top: 6px;
-        }
-
-        /* Tab切换样式 */
-        .tab-container {
-            display: flex;
-            gap: 0;
-            margin: 1.5rem 0 0 0;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .tab-btn {
-            padding: 0.8rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #6b7280;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: -2px;
-        }
-
-        .tab-btn:hover {
-            color: #f15a23;
-        }
-
-        .tab-btn.active {
-            color: #f15a23;
-            border-bottom-color: #f15a23;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* 总部mkt资源库 - 子分类卡片 */
-        .mkt-sub-tabs {
-            display: flex;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .mkt-sub-card {
-            flex: 1;
-            min-width: 200px;
-            max-width: 320px;
-            padding: 2rem 1.5rem;
-            background: #fff;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mkt-sub-card:hover {
-            border-color: #9ca3af;
-            background: #f3f4f6;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .mkt-sub-card.active {
-            border-color: #f15a23;
-            background: #fff7ed;
-            box-shadow: 0 4px 12px rgba(241,90,35,0.15);
-        }
-
-        .mkt-sub-card .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .mkt-sub-card .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1a1e24;
-            margin-bottom: 0.3rem;
-        }
-
-        .mkt-sub-card .card-desc {
-            font-size: 0.85rem;
-            color: #9ca3af;
-        }
-
-        .mkt-sub-card.active .card-title {
-            color: #f15a23;
-        }
-
-        .mkt-sub-content {
-            display: none;
-        }
-
-        .mkt-sub-content.active {
-            display: block;
-        }
-
-        .mkt-empty {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #9ca3af;
-        }
-
-        .mkt-empty .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .mkt-empty p {
-            font-size: 1rem;
-        }
-
-        .search-section {
-            margin: 1.5rem 0 2rem 0;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .search-wrapper {
-            display: flex;
-            align-items: center;
-            max-width: 400px;
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 40px;
-            padding: 0.3rem 0.3rem 0.3rem 1.2rem;
-            transition: box-shadow 0.2s, border-color 0.2s;
-        }
-
-        .search-wrapper:focus-within {
-            border-color: #f15a23;
-            box-shadow: 0 0 0 3px rgba(241, 90, 35, 0.1);
-        }
-
-        .search-input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 0.95rem;
-            padding: 0.5rem 0;
-            outline: none;
-            color: #1e293b;
-        }
-
-        .search-input::placeholder {
-            color: #94a3b8;
-            font-weight: 300;
-        }
-
-        .search-button {
-            background: #f15a23;
-            border: none;
-            color: white;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background 0.15s;
-            font-size: 1.1rem;
-        }
-
-        .search-button:hover {
-            background: #d94b1a;
-        }
-
-        .nav-section {
-            margin: 2rem 0 1rem 0;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .nav-menu-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #6f6f7a;
-            background: transparent;
-            padding: 0.5rem 0;
-            white-space: nowrap;
-        }
-
-        .nav-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            flex: 1;
-        }
-
-        .ppt-btn {
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, #f15a23 0%, #e84822 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(241, 90, 35, 0.3);
-        }
-
-        .ppt-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(241, 90, 35, 0.4);
-        }
-
-        /* 案例复选框 */
-        .case-card {
-            position: relative;
-        }
-
-        .case-checkbox {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 22px;
-            height: 22px;
-            z-index: 10;
-            cursor: pointer;
-            accent-color: #f15a23;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .case-card:hover .case-checkbox {
-            opacity: 1;
-        }
-
-        .case-card.selected-case {
-            outline: 3px solid #f15a23;
-            outline-offset: 2px;
-        }
-
-        .filter-tag {
-            padding: 0.5rem 1.3rem;
-            background-color: #f2f3f5;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #2d323a;
-            transition: all 0.15s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            white-space: nowrap;
-        }
-
-        .filter-tag:hover {
-            background-color: #e6e8ec;
-            border-color: #f15a2330;
-        }
-
-        .filter-tag.selected {
-            background-color: #f15a23;
-            color: white;
-            box-shadow: 0 4px 8px rgba(241, 90, 35, 0.18);
-        }
-
-        .filter-tag.active {
-            background-color: #f15a23;
-            color: white;
-            box-shadow: 0 4px 8px rgba(241, 90, 35, 0.18);
-        }
-
-        .filter-tag .count {
-            font-size: 0.8rem;
-            background: rgba(0,0,0,0.06);
-            color: #5f6c7c;
-            padding: 0.1rem 0.5rem;
-            border-radius: 30px;
-            transition: inherit;
-            margin-left: 0.1rem;
-        }
-
-        .filter-tag.selected .count,
-        .filter-tag.active .count {
-            background: rgba(255,255,255,0.25);
-            color: white;
-        }
-
-        .divider {
-            border: none;
-            height: 1px;
-            background: linear-gradient(90deg, #e0e4e8 20%, #cbd0d6 80%);
-            margin: 2rem 0 2.2rem 0;
-            opacity: 0.5;
-        }
-
-        .grid-container {
-            position: relative;
-        }
-
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem 2rem;
-            transition: opacity 0.2s;
-        }
-
-        .case-grid.hidden {
-            display: none;
-        }
-
-        .case-card {
-            position: relative;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            cursor: pointer;
-            aspect-ratio: 4 / 3;
-            background-color: #2d3748;
-            border-top: 4px solid #f15a23;
-        }
-
-        .case-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 40px -16px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        .card-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem 1.5rem 1.5rem 1.5rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
-            color: white;
-            z-index: 1;
-            border-bottom-left-radius: 28px;
-            border-bottom-right-radius: 28px;
-            overflow-y: auto;
-            max-height: 100%;
-        }
-
-        .card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .card-tag {
-            padding: 0.2rem 0.9rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            color: white;
-            white-space: nowrap;
-        }
-
-        .card-tag.type { border: 1px solid #1478c8; }
-        .card-tag.client { border: 1px solid #28a745; }
-        .card-tag.activity { border: 1px solid #e67e22; }
-        .card-tag.product { border: 1px solid #9b59b6; }
-        .card-tag.feature { border: 1px solid #e83e8c; }
-        .card-tag.highlight { border: 1px solid #f1c40f; }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.6);
-            display: flex;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .card-number {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #d1d9e6;
-            background: none;
-            border: none;
-            padding: 0;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-        }
-
-        .card-category {
-            color: white;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-
-        .card-meta {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.9);
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-            margin-top: 0.3rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-        }
-
-        .card-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .card-meta-icon {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            width: 1.2rem;
-            text-align: center;
-        }
-
-        .card-content-hidden {
-            display: none;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.6rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .page-btn {
-            padding: 0.5rem 1.3rem;
-            background-color: #f2f3f5;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #2d323a;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            min-width: 48px;
-            text-align: center;
-            user-select: none;
-        }
-
-        .page-btn:hover {
-            background-color: #e6e8ec;
-            border-color: #f15a2330;
-        }
-
-        .page-btn.active {
-            background-color: #f15a23;
-            color: white;
-            box-shadow: 0 4px 8px rgba(241, 90, 35, 0.18);
-        }
-
-        .page-btn.prev-next {
-            padding: 0.5rem 1.6rem;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s;
-            padding: 1.5rem;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 900px;
-            width: 100%;
-            height: 80vh;
-            max-height: 700px;
-            border-radius: 24px;
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            background: rgba(255,255,255,0.95);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
-            color: #1a1e24;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            transition: all 0.2s;
-            z-index: 1010;
-        }
-
-        .modal-close:hover {
-            background: #f15a23;
-            color: white;
-            transform: rotate(90deg);
-        }
-
-        /* PDF下载按钮 */
-        .modal-download-btn {
-            position: absolute;
-            top: 1.2rem;
-            left: 1.2rem;
-            background: linear-gradient(135deg, #f15a23 0%, #d94b1a 100%);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 4px 20px rgba(241, 90, 35, 0.4);
-            transition: all 0.2s ease;
-            z-index: 1010;
-            text-decoration: none;
-        }
-
-        .modal-download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(241, 90, 35, 0.5);
-            background: linear-gradient(135deg, #ff6a30 0%, #f15a23 100%);
-        }
-
-        .modal-download-btn .download-icon {
-            font-size: 1.3rem;
-        }
-
-        .modal-download-btn.show {
-            display: flex;
-        }
-
-        /* 原文链接按钮 */
-        .modal-link-btn {
-            position: absolute;
-            top: 1.2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff2442 0%, #d91a37 100%);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            gap: 0.6rem;
-            box-shadow: 0 4px 20px rgba(255, 36, 66, 0.4);
-            transition: all 0.2s ease;
-            z-index: 1010;
-            text-decoration: none;
-        }
-
-        .modal-link-btn:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 25px rgba(255, 36, 66, 0.5);
-        }
-
-        .modal-link-btn .link-icon {
-            font-size: 1.3rem;
-        }
-
-        .modal-link-btn.show {
-            display: flex;
-        }
-
-        /* 相关材料按钮 - 白色风格 */
-        .modal-link-btn.white-style {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-            color: #333;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .modal-link-btn.white-style:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, #ffffff 0%, #e8e8e8 100%);
-        }
-
-        /* 图片作为背景 */
-        .modal-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* 渐变蒙版 - 上轻下重 */
-        .modal-overlay-mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                rgba(0,0,0,0.3) 0%,
-                rgba(0,0,0,0.4) 30%,
-                rgba(0,0,0,0.75) 60%,
-                rgba(0,0,0,0.92) 100%
-            );
-            z-index: 2;
-        }
-
-        /* 文字内容覆盖层 */
-        .modal-text {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2.5rem 2.5rem 2.5rem;
-            z-index: 3;
-            overflow-y: auto;
-            max-height: 70%;
-        }
-
-        .modal-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            letter-spacing: -0.02em;
-        }
-
-        /* 紧凑表格样式 - 白色文字版 */
-        .compact-section {
-            margin-bottom: 1.8rem;
-        }
-        .compact-section:last-child {
-            margin-bottom: 0;
-        }
-        .compact-section h4 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #f15a23;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .compact-grid {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 0.5rem 1rem;
-            align-items: baseline;
-        }
-        .compact-label {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        .compact-value {
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 500;
-            word-break: break-word;
-            line-height: 1.4;
-        }
-
-        .modal-detail-grid {
-            display: none;
-        }
-        .modal-description {
-            display: none;
-        }
-
-        @media (max-width: 800px) {
-            .case-grid {
-                grid-template-columns: 1fr;
-                gap: 1.8rem;
-            }
-            .main-title {
-                font-size: 2rem;
-            }
-            .nav-menu {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .compact-grid {
-                grid-template-columns: 1fr 2fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 1.5rem 1rem;
-            }
-            .card-title {
-                font-size: 1.3rem;
-            }
-            .filter-tag, .page-btn {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-            }
-            .modal-content {
-                height: 85vh;
-                border-radius: 16px;
-            }
-            .modal-text {
-                padding: 1.5rem;
-                max-height: 75%;
-            }
-            .modal-title {
-                font-size: 1.5rem;
-            }
-            .compact-grid {
-                grid-template-columns: 80px 1fr;
-                gap: 0.4rem 0.8rem;
-            }
-            .compact-value {
-                font-size: 0.85rem;
-            }
-        }
+        /* 样式完全不变，此处省略（原样保留） */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:#FFFFFF; font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#1a1e24; line-height:1.5; padding:2rem 1.5rem; }
+        .container { max-width:1280px; margin:0 auto; }
+        .main-title { font-size:2.4rem; font-weight:600; letter-spacing:-0.02em; margin-bottom:0.5rem; color:#101214; position:relative; display:inline-block; }
+        .main-title::after { content:''; display:block; width:70px; height:4px; background:#f15a23; border-radius:4px; margin-top:6px; }
+        .tab-container { display:flex; gap:0; margin:1.5rem 0 0 0; border-bottom:2px solid #e5e7eb; }
+        .tab-btn { padding:0.8rem 2rem; font-size:1.1rem; font-weight:600; color:#6b7280; background:transparent; border:none; border-bottom:3px solid transparent; cursor:pointer; transition:all 0.2s ease; margin-bottom:-2px; }
+        .tab-btn:hover { color:#f15a23; }
+        .tab-btn.active { color:#f15a23; border-bottom-color:#f15a23; }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        .mkt-sub-tabs { display:flex; gap:1.5rem; margin:2rem 0; flex-wrap:wrap; }
+        .mkt-sub-card { flex:1; min-width:200px; max-width:320px; padding:2rem 1.5rem; background:#fff; border:2px solid #e5e7eb; border-radius:12px; text-align:center; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden; }
+        .mkt-sub-card:hover { border-color:#9ca3af; background:#f3f4f6; transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+        .mkt-sub-card.active { border-color:#f15a23; background:#fff7ed; box-shadow:0 4px 12px rgba(241,90,35,0.15); }
+        .mkt-sub-card .card-icon { font-size:2.5rem; margin-bottom:0.8rem; }
+        .mkt-sub-card .card-title { font-size:1.1rem; font-weight:700; color:#1a1e24; margin-bottom:0.3rem; }
+        .mkt-sub-card .card-desc { font-size:0.85rem; color:#9ca3af; }
+        .mkt-sub-card.active .card-title { color:#f15a23; }
+        .mkt-sub-content { display:none; }
+        .mkt-sub-content.active { display:block; }
+        .mkt-empty { text-align:center; padding:4rem 2rem; color:#9ca3af; }
+        .mkt-empty .empty-icon { font-size:3rem; margin-bottom:1rem; }
+        .search-section { margin:1.5rem 0 2rem 0; display:flex; align-items:center; flex-wrap:wrap; gap:1rem; }
+        .search-wrapper { display:flex; align-items:center; max-width:400px; background-color:#f8fafc; border:1px solid #e2e8f0; border-radius:40px; padding:0.3rem 0.3rem 0.3rem 1.2rem; transition:box-shadow 0.2s, border-color 0.2s; }
+        .search-wrapper:focus-within { border-color:#f15a23; box-shadow:0 0 0 3px rgba(241,90,35,0.1); }
+        .search-input { flex:1; border:none; background:transparent; font-size:0.95rem; padding:0.5rem 0; outline:none; color:#1e293b; }
+        .search-input::placeholder { color:#94a3b8; font-weight:300; }
+        .search-button { background:#f15a23; border:none; color:white; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.15s; font-size:1.1rem; }
+        .search-button:hover { background:#d94b1a; }
+        .nav-section { margin:2rem 0 1rem 0; }
+        .nav-menu { display:flex; align-items:flex-start; flex-wrap:wrap; gap:1rem 2rem; margin-bottom:1.5rem; }
+        .nav-menu-title { font-size:0.9rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#6f6f7a; background:transparent; padding:0.5rem 0; white-space:nowrap; }
+        .nav-items { display:flex; flex-wrap:wrap; gap:0.6rem; flex:1; }
+        .ppt-btn { padding:0.6rem 1.2rem; background:linear-gradient(135deg, #f15a23 0%, #e84822 100%); color:white; border:none; border-radius:8px; font-size:0.9rem; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow:0 2px 8px rgba(241,90,35,0.3); }
+        .ppt-btn:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(241,90,35,0.4); }
+        .case-card { position:relative; }
+        .case-checkbox { position:absolute; top:10px; left:10px; width:22px; height:22px; z-index:10; cursor:pointer; accent-color:#f15a23; opacity:0; transition:opacity 0.2s; }
+        .case-card:hover .case-checkbox { opacity:1; }
+        .case-card.selected-case { outline:3px solid #f15a23; outline-offset:2px; }
+        .filter-tag { padding:0.5rem 1.3rem; background-color:#f2f3f5; border-radius:40px; font-size:0.9rem; font-weight:500; color:#2d323a; transition:all 0.15s ease; border:1px solid transparent; cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem; white-space:nowrap; }
+        .filter-tag:hover { background-color:#e6e8ec; border-color:#f15a2330; }
+        .filter-tag.selected { background-color:#f15a23; color:white; box-shadow:0 4px 8px rgba(241,90,35,0.18); }
+        .filter-tag.active { background-color:#f15a23; color:white; box-shadow:0 4px 8px rgba(241,90,35,0.18); }
+        .filter-tag .count { font-size:0.8rem; background:rgba(0,0,0,0.06); color:#5f6c7c; padding:0.1rem 0.5rem; border-radius:30px; transition:inherit; margin-left:0.1rem; }
+        .filter-tag.selected .count, .filter-tag.active .count { background:rgba(255,255,255,0.25); color:white; }
+        .divider { border:none; height:1px; background:linear-gradient(90deg, #e0e4e8 20%, #cbd0d6 80%); margin:2rem 0 2.2rem 0; opacity:0.5; }
+        .grid-container { position:relative; }
+        .case-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:2rem 2rem; transition:opacity 0.2s; }
+        .case-grid.hidden { display:none; }
+        .case-card { position:relative; border-radius:28px; overflow:hidden; box-shadow:0 18px 30px -12px rgba(0,0,0,0.2); transition:transform 0.25s ease, box-shadow 0.25s ease; cursor:pointer; aspect-ratio:4/3; background-color:#2d3748; border-top:4px solid #f15a23; }
+        .case-card:hover { transform:translateY(-6px); box-shadow:0 24px 40px -16px rgba(0,0,0,0.3); }
+        .card-bg { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+        .card-content { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 50%, transparent 100%); color:white; z-index:1; border-bottom-left-radius:28px; border-bottom-right-radius:28px; overflow-y:auto; max-height:100%; }
+        .card-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem; }
+        .card-tag { padding:0.2rem 0.9rem; border-radius:30px; font-size:0.7rem; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); box-shadow:0 2px 5px rgba(0,0,0,0.2); color:white; white-space:nowrap; }
+        .card-tag.type { border:1px solid #1478c8; }
+        .card-tag.client { border:1px solid #28a745; }
+        .card-tag.activity { border:1px solid #e67e22; }
+        .card-tag.product { border:1px solid #9b59b6; }
+        .card-tag.feature { border:1px solid #e83e8c; }
+        .card-tag.highlight { border:1px solid #f1c40f; }
+        .card-title { font-size:1.5rem; font-weight:600; line-height:1.3; margin-bottom:0.5rem; text-shadow:0 2px 5px rgba(0,0,0,0.6); display:flex; align-items:baseline; flex-wrap:wrap; gap:0.5rem; }
+        .card-number { font-size:1.1rem; font-weight:500; color:#d1d9e6; background:none; border:none; padding:0; text-shadow:0 1px 3px rgba(0,0,0,0.5); }
+        .card-category { color:white; background:none; border:none; padding:0; }
+        .card-meta { font-size:0.9rem; color:rgba(255,255,255,0.9); display:flex; flex-direction:column; gap:0.15rem; margin-top:0.3rem; text-shadow:0 1px 4px rgba(0,0,0,0.6); }
+        .card-meta-item { display:flex; align-items:center; gap:0.4rem; }
+        .card-meta-icon { font-size:0.95rem; opacity:0.9; width:1.2rem; text-align:center; }
+        .pagination { display:flex; justify-content:center; align-items:center; gap:0.6rem; margin-top:3rem; flex-wrap:wrap; }
+        .page-btn { padding:0.5rem 1.3rem; background-color:#f2f3f5; border-radius:40px; font-size:0.9rem; font-weight:500; color:#2d323a; border:1px solid transparent; cursor:pointer; transition:all 0.15s ease; min-width:48px; text-align:center; user-select:none; }
+        .page-btn:hover { background-color:#e6e8ec; border-color:#f15a2330; }
+        .page-btn.active { background-color:#f15a23; color:white; box-shadow:0 4px 8px rgba(241,90,35,0.18); }
+        .page-btn.prev-next { padding:0.5rem 1.6rem; }
+        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; z-index:1000; opacity:0; visibility:hidden; transition:opacity 0.3s ease, visibility 0.3s; padding:1.5rem; }
+        .modal-overlay.active { opacity:1; visibility:visible; }
+        .modal-content { position:relative; max-width:900px; width:100%; height:80vh; max-height:700px; border-radius:24px; box-shadow:0 50px 100px rgba(0,0,0,0.5); overflow:hidden; transform:scale(0.9); transition:transform 0.3s ease; }
+        .modal-overlay.active .modal-content { transform:scale(1); }
+        .modal-close { position:absolute; top:1.2rem; right:1.2rem; background:rgba(255,255,255,0.95); border:none; width:44px; height:44px; border-radius:50%; font-size:1.5rem; line-height:1; cursor:pointer; color:#1a1e24; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,0,0,0.3); transition:all 0.2s; z-index:1010; }
+        .modal-close:hover { background:#f15a23; color:white; transform:rotate(90deg); }
+        .modal-download-btn { position:absolute; top:1.2rem; left:1.2rem; background:linear-gradient(135deg, #f15a23 0%, #d94b1a 100%); border:none; padding:0.8rem 1.5rem; border-radius:30px; font-size:1rem; font-weight:600; color:white; cursor:pointer; display:none; align-items:center; gap:0.6rem; box-shadow:0 4px 20px rgba(241,90,35,0.4); transition:all 0.2s ease; z-index:1010; text-decoration:none; }
+        .modal-download-btn:hover { transform:translateY(-2px); box-shadow:0 6px 25px rgba(241,90,35,0.5); background:linear-gradient(135deg, #ff6a30 0%, #f15a23 100%); }
+        .modal-download-btn .download-icon { font-size:1.3rem; }
+        .modal-download-btn.show { display:flex; }
+        .modal-link-btn { position:absolute; top:1.2rem; left:50%; transform:translateX(-50%); background:linear-gradient(135deg, #ff2442 0%, #d91a37 100%); border:none; padding:0.8rem 1.5rem; border-radius:30px; font-size:1rem; font-weight:600; color:white; cursor:pointer; display:none; align-items:center; gap:0.6rem; box-shadow:0 4px 20px rgba(255,36,66,0.4); transition:all 0.2s ease; z-index:1010; text-decoration:none; }
+        .modal-link-btn:hover { transform:translateX(-50%) translateY(-2px); box-shadow:0 6px 25px rgba(255,36,66,0.5); }
+        .modal-link-btn .link-icon { font-size:1.3rem; }
+        .modal-link-btn.show { display:flex; }
+        .modal-link-btn.white-style { background:linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); color:#333; box-shadow:0 4px 20px rgba(0,0,0,0.15); }
+        .modal-link-btn.white-style:hover { transform:translateX(-50%) translateY(-2px); box-shadow:0 6px 25px rgba(0,0,0,0.2); background:linear-gradient(135deg, #ffffff 0%, #e8e8e8 100%); }
+        .modal-image { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
+        .modal-image img { width:100%; height:100%; object-fit:cover; display:block; }
+        .modal-overlay-mask { position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.75) 60%, rgba(0,0,0,0.92) 100%); z-index:2; }
+        .modal-text { position:absolute; bottom:0; left:0; right:0; padding:2.5rem; z-index:3; overflow-y:auto; max-height:70%; }
+        .modal-title { font-size:2.2rem; font-weight:700; color:white; margin-bottom:1.5rem; text-shadow:0 2px 10px rgba(0,0,0,0.5); letter-spacing:-0.02em; }
+        .compact-section { margin-bottom:1.8rem; }
+        .compact-section:last-child { margin-bottom:0; }
+        .compact-section h4 { font-size:0.85rem; font-weight:600; color:#f15a23; margin-bottom:0.8rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(255,255,255,0.2); text-transform:uppercase; letter-spacing:1px; }
+        .compact-grid { display:grid; grid-template-columns:100px 1fr; gap:0.5rem 1rem; align-items:baseline; }
+        .compact-label { color:rgba(255,255,255,0.6); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; }
+        .compact-value { color:white; font-size:0.95rem; font-weight:500; word-break:break-word; line-height:1.4; }
+        .modal-detail-grid { display:none; }
+        .modal-description { display:none; }
+        @media (max-width:800px) { .case-grid { grid-template-columns:1fr; gap:1.8rem; } .main-title { font-size:2rem; } .nav-menu { flex-direction:column; gap:0.5rem; } .compact-grid { grid-template-columns:1fr 2fr; } }
+        @media (max-width:480px) { body { padding:1.5rem 1rem; } .card-title { font-size:1.3rem; } .filter-tag, .page-btn { padding:0.4rem 1rem; font-size:0.85rem; } .modal-content { height:85vh; border-radius:16px; } .modal-text { padding:1.5rem; max-height:75%; } .modal-title { font-size:1.5rem; } .compact-grid { grid-template-columns:80px 1fr; gap:0.4rem 0.8rem; } .compact-value { font-size:0.85rem; } }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="main-title">Mercedes-Benz After-Sales Marketing Case Library</h1>
 
-        <!-- Tab切换按钮 -->
         <div class="tab-container">
             <button class="tab-btn active" data-tab="internal">内部案例</button>
             <button class="tab-btn" data-tab="external">外部案例</button>
             <button class="tab-btn" data-tab="mkt">总部mkt资源库</button>
         </div>
 
-        <!-- 内部案例内容 -->
+        <!-- 内部案例 -->
         <div class="tab-content active" id="internalTab">
             <div class="search-section">
                 <div class="search-wrapper">
@@ -855,13 +132,9 @@
                 </div>
                 <button class="ppt-btn" id="generatePPTBtn">一键生成PPT</button>
             </div>
-
             <div class="nav-section" id="filterMenus"></div>
-
             <hr class="divider">
-
             <div class="grid-container" id="gridContainer"></div>
-
             <div class="pagination" id="pagination">
                 <button class="page-btn prev-next" id="prevPage" disabled>◀ 上一页</button>
                 <button class="page-btn active" data-page="1">1</button>
@@ -870,7 +143,7 @@
             </div>
         </div>
 
-        <!-- 外部案例内容 -->
+        <!-- 外部案例 -->
         <div class="tab-content" id="externalTab">
             <div class="search-section">
                 <div class="search-wrapper">
@@ -878,13 +151,9 @@
                     <button class="search-button" id="searchButtonExternal"><span>🔍</span></button>
                 </div>
             </div>
-
             <div class="nav-section" id="filterMenusExternal"></div>
-
             <hr class="divider">
-
             <div class="grid-container" id="gridContainerExternal"></div>
-
             <div class="pagination" id="paginationExternal">
                 <button class="page-btn prev-next" id="prevPageExternal" disabled>◀ 上一页</button>
                 <button class="page-btn active" data-page="1">1</button>
@@ -893,7 +162,7 @@
             </div>
         </div>
 
-        <!-- 总部mkt资源库内容 -->
+        <!-- 总部资源库 -->
         <div class="tab-content" id="mktTab">
             <div class="mkt-sub-tabs">
                 <div class="mkt-sub-card" data-subtab="wechat" id="mktSubWechat">
@@ -940,21 +209,21 @@
 
     <script>
         (function() {
-            // ---------- 完整数据定义 ----------
+            // ---------- 内部案例数据 ----------
             const cardData = [
-                { id: 2, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "合肥利之星", date: "2022年Q3", theme: "方寸见万象", photo: "/images/2.jpg", clientRaw: "留修、VIP客户", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "蔬菜采摘\n万花筒DIY", highlightRaw: "传播链完整", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%90%88%E8%82%A5%E5%88%A9%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=9154ecc9-5dd6-49b6-b9b5-2b0042cccfa6&project_id=7618883630919712811&sign=6bcc6ac5c72f7895666d240b9ca840312010b80f199bcf89e521d9fd6733b86c" },
-                { id: 3, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "安徽鹏龙融富", date: "2022年Q3", theme: "方寸见万象", photo: "/images/3.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾、夏季雨季", productRaw: "空调清洗", featureRaw: "蔬菜采摘\n万花筒DIY", highlightRaw: "传播链完整", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%AE%89%E5%BE%BD%E9%B9%8F%E9%BE%99%E8%9E%8D%E5%AF%8C%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=a2add46f-2f73-4763-958a-d51e682a01c9&project_id=7618883630919712811&sign=96df21f4245f494cbc3633157c1c108a39c6ff798d0f2c0375f3058731e22d76" },
-                { id: 4, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "常州外汽星豪", date: "2022年Q1", theme: "新遇寄春光", photo: "/images/4.jpg", clientRaw: "3-5年车主、家庭亲子", activityRaw: "店内活动、车间、春节", productRaw: "精品\n钣喷维修", featureRaw: "全家福\n主题摄影", highlightRaw: "WOM传播", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%B8%B8%E5%B7%9E%E5%A4%96%E6%B1%BD%E6%98%9F%E8%B1%AA%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=26c5c6b1-bd61-4a37-9118-6d705a6f50cf&project_id=7618883630919712811&sign=0e0f275baddb8655374317accb72975f596335bc4f970a91c1e3fe37fb33e31e" },
-                { id: 5, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "杭州元通之星", date: "2022年Q4", theme: "风华自生香", photo: "/images/5.jpg", clientRaw: "女性、中高端", activityRaw: "店内活动", productRaw: "香氛\n秋冬保养", featureRaw: "古法香囊", highlightRaw: "传播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E6%9D%AD%E5%B7%9E%E5%85%83%E9%80%9A%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=9daea201-21e7-4929-afbf-4f92774ca8e9&project_id=7618883630919712811&sign=7dd2585bc41adae725aa1f1044ec1c5983850e16dcd8a56d13d1bd5247202a6a" },
-                { id: 6, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "北区", dealer: "潍坊鹏龙金阳光", date: "2022年Q3", theme: "方寸见万象", photo: "/images/6.jpg", clientRaw: "综合", activityRaw: "夏季雨季", productRaw: "空调清洗\n雨季配件", featureRaw: "后备箱市集\n做盆栽\n晚宴", highlightRaw: "提高产值\n", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E5%8C%97%E5%8C%BA_%E6%BD%8D%E5%9D%8A%E9%B9%8F%E9%BE%99%E9%87%91%E9%98%B3%E5%85%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=56a475ad-a64f-4baf-ba19-94f99730e5ab&project_id=7618883630919712811&sign=d377f1f25b7541c8ade47e1aee8f160e59a192fd68bbe4ddd1c4a3977590718f" },
-                { id: 7, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "北区", dealer: "天津之星", date: "2022年Q2", theme: "乐逢山水长", photo: "/images/7.jpg", clientRaw: "家庭亲子、3-5年车主", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "团队对抗运动", highlightRaw: "提高产值", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F%E5%8C%97%E5%8C%BA_%E5%A4%A9%E6%B4%A5%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E7%BB%B4%E4%BF%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=6b23a61b-8983-4307-b112-280b074aa1cc&project_id=7618883630919712811&sign=cdbe465426a3d715806e5bba3491c8c9ccc446313c79e1dc6593a0b8ce29c153" },
-                { id: 8, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "南区", dealer: "广州鸿粤星辉", date: "2022年Q2", theme: "乐逢山水长", photo: "/images/8.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾", productRaw: "日常保养\n精品", featureRaw: "树叶风铃制作", highlightRaw: "直播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E5%8D%97%E5%8C%BA_%E5%B9%BF%E5%B7%9E%E9%B8%BF%E7%B2%A4%E6%98%9F%E8%BE%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96_%E4%B9%90%E9%80%A2%E5%B1%B1%E6%B0%B4%E9%95%BF.pdf&nonce=4bf53322-32c3-4ee6-b09d-e509be191d30&project_id=7618883630919712811&sign=b8ac3beb9ab5c7de8eee7b518d6e422f76f9dbc864720094a862c77b40f200d7" },
-                { id: 9, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "南区", dealer: "深圳市大兴宝誉", date: "2022年Q2", theme: "乐逢山水长", photo: "/images/9.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "创意摆拍", highlightRaw: "传播数据好\n直播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E5%8D%97%E5%8C%BA_%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%A4%A7%E5%85%B4%E5%AE%9D%E8%AA%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=ffd004b5-9c96-467a-8efd-fd48ce7d897f&project_id=7618883630919712811&sign=55fd8a6abc4c6e547d6bb4cfd8ebcfc442f628aa2489e64f25d1767719666b4b" },
-                { id: 10, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "西区", dealer: "重庆华星锦业", date: "2022年Q1", theme: "新遇寄春光", photo: "/images/10.jpg", clientRaw: "3-5年车主", activityRaw: "店内活动、车间\n折扣活动", productRaw: "日常保养", featureRaw: "中国结DIY", highlightRaw: "提高产值", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E8%A5%BF%E5%8C%BA_%E9%87%8D%E5%BA%86%E5%8D%8E%E6%98%9F%E9%94%A6%E4%B8%9A%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=1501b4e0-befd-423f-bb39-ee04f80b2f6e&project_id=7618883630919712811&sign=ae85b328472e855cc0ed1cfa2234689850ba8c534db9ab0b7881723d22e5a706" },
-                { id: 11, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "西区", dealer: "武汉鹏龙华通", date: "2022年Q1", theme: "新遇寄春光", photo: "/images/11.jpg", clientRaw: "维保客户", activityRaw: "店内活动、春节", productRaw: "精品、保养套餐", featureRaw: "非遗面塑艺术", highlightRaw: "", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E8%A5%BF%E5%8C%BA_%E6%AD%A6%E6%B1%89%E9%B9%8F%E9%BE%99%E5%8D%8E%E9%80%9A%E6%B1%BD%E8%BD%A6%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=df70ec22-65ce-423b-beda-0b8c62a24bf7&project_id=7618883630919712811&sign=94745a0e307c4073e55d7dff3af4c4f3fa60be942f705e54c41f37b65a45e178" }
+                { id: 2, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "合肥利之星", date: "2022年Q3", theme: "方寸见万象", photo: "images/2.jpg", clientRaw: "留修、VIP客户", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "蔬菜采摘\n万花筒DIY", highlightRaw: "传播链完整", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%90%88%E8%82%A5%E5%88%A9%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=9154ecc9-5dd6-49b6-b9b5-2b0042cccfa6&project_id=7618883630919712811&sign=6bcc6ac5c72f7895666d240b9ca840312010b80f199bcf89e521d9fd6733b86c" },
+                { id: 3, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "安徽鹏龙融富", date: "2022年Q3", theme: "方寸见万象", photo: "images/3.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾、夏季雨季", productRaw: "空调清洗", featureRaw: "蔬菜采摘\n万花筒DIY", highlightRaw: "传播链完整", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%AE%89%E5%BE%BD%E9%B9%8F%E9%BE%99%E8%9E%8D%E5%AF%8C%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=a2add46f-2f73-4763-958a-d51e682a01c9&project_id=7618883630919712811&sign=96df21f4245f494cbc3633157c1c108a39c6ff798d0f2c0375f3058731e22d76" },
+                { id: 4, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "常州外汽星豪", date: "2022年Q1", theme: "新遇寄春光", photo: "images/4.jpg", clientRaw: "3-5年车主、家庭亲子", activityRaw: "店内活动、车间、春节", productRaw: "精品\n钣喷维修", featureRaw: "全家福\n主题摄影", highlightRaw: "WOM传播", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E5%B8%B8%E5%B7%9E%E5%A4%96%E6%B1%BD%E6%98%9F%E8%B1%AA%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=26c5c6b1-bd61-4a37-9118-6d705a6f50cf&project_id=7618883630919712811&sign=0e0f275baddb8655374317accb72975f596335bc4f970a91c1e3fe37fb33e31e" },
+                { id: 5, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "东区", dealer: "杭州元通之星", date: "2022年Q4", theme: "风华自生香", photo: "images/5.jpg", clientRaw: "女性、中高端", activityRaw: "店内活动", productRaw: "香氛\n秋冬保养", featureRaw: "古法香囊", highlightRaw: "传播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E4%B8%9C%E5%8C%BA_%E6%9D%AD%E5%B7%9E%E5%85%83%E9%80%9A%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=9daea201-21e7-4929-afbf-4f92774ca8e9&project_id=7618883630919712811&sign=7dd2585bc41adae725aa1f1044ec1c5983850e16dcd8a56d13d1bd5247202a6a" },
+                { id: 6, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "北区", dealer: "潍坊鹏龙金阳光", date: "2022年Q3", theme: "方寸见万象", photo: "images/6.jpg", clientRaw: "综合", activityRaw: "夏季雨季", productRaw: "空调清洗\n雨季配件", featureRaw: "后备箱市集\n做盆栽\n晚宴", highlightRaw: "提高产值\n", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E5%8C%97%E5%8C%BA_%E6%BD%8D%E5%9D%8A%E9%B9%8F%E9%BE%99%E9%87%91%E9%98%B3%E5%85%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=56a475ad-a64f-4baf-ba19-94f99730e5ab&project_id=7618883630919712811&sign=d377f1f25b7541c8ade47e1aee8f160e59a192fd68bbe4ddd1c4a3977590718f" },
+                { id: 7, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "北区", dealer: "天津之星", date: "2022年Q2", theme: "乐逢山水长", photo: "images/7.jpg", clientRaw: "家庭亲子、3-5年车主", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "团队对抗运动", highlightRaw: "提高产值", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F%E5%8C%97%E5%8C%BA_%E5%A4%A9%E6%B4%A5%E4%B9%8B%E6%98%9F%E6%B1%BD%E8%BD%A6%E7%BB%B4%E4%BF%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=6b23a61b-8983-4307-b112-280b074aa1cc&project_id=7618883630919712811&sign=cdbe465426a3d715806e5bba3491c8c9ccc446313c79e1dc6593a0b8ce29c153" },
+                { id: 8, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "南区", dealer: "广州鸿粤星辉", date: "2022年Q2", theme: "乐逢山水长", photo: "images/8.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾", productRaw: "日常保养\n精品", featureRaw: "树叶风铃制作", highlightRaw: "直播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E5%8D%97%E5%8C%BA_%E5%B9%BF%E5%B7%9E%E9%B8%BF%E7%B2%A4%E6%98%9F%E8%BE%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96_%E4%B9%90%E9%80%A2%E5%B1%B1%E6%B0%B4%E9%95%BF.pdf&nonce=4bf53322-32c3-4ee6-b09d-e509be191d30&project_id=7618883630919712811&sign=b8ac3beb9ab5c7de8eee7b518d6e422f76f9dbc864720094a862c77b40f200d7" },
+                { id: 9, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "南区", dealer: "深圳市大兴宝誉", date: "2022年Q2", theme: "乐逢山水长", photo: "images/9.jpg", clientRaw: "家庭亲子", activityRaw: "短途自驾", productRaw: "日常保养", featureRaw: "创意摆拍", highlightRaw: "传播数据好\n直播数据好", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E5%8D%97%E5%8C%BA_%E6%B7%B1%E5%9C%B3%E5%B8%82%E5%A4%A7%E5%85%B4%E5%AE%9D%E8%AA%89%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=ffd004b5-9c96-467a-8efd-fd48ce7d897f&project_id=7618883630919712811&sign=55fd8a6abc4c6e547d6bb4cfd8ebcfc442f628aa2489e64f25d1767719666b4b" },
+                { id: 10, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "西区", dealer: "重庆华星锦业", date: "2022年Q1", theme: "新遇寄春光", photo: "images/10.jpg", clientRaw: "3-5年车主", activityRaw: "店内活动、车间\n折扣活动", productRaw: "日常保养", featureRaw: "中国结DIY", highlightRaw: "提高产值", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F105%E5%88%86-%E8%A5%BF%E5%8C%BA_%E9%87%8D%E5%BA%86%E5%8D%8E%E6%98%9F%E9%94%A6%E4%B8%9A%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E6%9C%8D%E5%8A%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=1501b4e0-befd-423f-bb39-ee04f80b2f6e&project_id=7618883630919712811&sign=ae85b328472e855cc0ed1cfa2234689850ba8c534db9ab0b7881723d22e5a706" },
+                { id: 11, type: "内部", category: "线下经销商活动", bf: "Best Practice", region: "西区", dealer: "武汉鹏龙华通", date: "2022年Q1", theme: "新遇寄春光", photo: "images/11.jpg", clientRaw: "维保客户", activityRaw: "店内活动、春节", productRaw: "精品、保养套餐", featureRaw: "非遗面塑艺术", highlightRaw: "", pdfUrl: "https://code.coze.cn/api/sandbox/coze_coding/file/proxy?expire_time=-1&file_path=assets%2F100%E5%88%86-%E8%A5%BF%E5%8C%BA_%E6%AD%A6%E6%B1%89%E9%B9%8F%E9%BE%99%E5%8D%8E%E9%80%9A%E6%B1%BD%E8%BD%A6%E8%B4%B8%E6%98%93%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_%E6%9C%80%E4%BD%B3%E4%B8%BB%E9%A2%98%E5%B8%82%E5%9C%BA%E6%B4%BB%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%A5%96.pdf&nonce=df70ec22-65ce-423b-beda-0b8c62a24bf7&project_id=7618883630919712811&sign=94745a0e307c4073e55d7dff3af4c4f3fa60be942f705e54c41f37b65a45e178" }
             ];
 
-            // 辅助函数：将原始字符串按顿号、逗号、换行分割成数组，并去除空值
+            // 辅助函数
             function splitValues(raw) {
                 if (!raw) return [];
                 return raw.replace(/、|\n/g, ',').split(',').map(s => s.trim()).filter(s => s.length > 0);
@@ -966,12 +235,11 @@
                 item.products = splitValues(item.productRaw);
                 item.features = splitValues(item.featureRaw);
                 item.highlights = splitValues(item.highlightRaw);
-
                 item.displayTitle = `No.${item.id} ${item.theme}`;
                 item.title = item.displayTitle;
                 item.desc = `${item.dealer} · ${item.date}`;
                 item.year = item.date.substring(0, 4);
-                item.activityType = item.category; // 类型标签
+                item.activityType = item.category;
             });
 
             let currentPage = 1;
@@ -980,16 +248,13 @@
             function renderCards() {
                 const container = document.getElementById('gridContainer');
                 container.innerHTML = '';
-
                 const page1Cards = cardData.slice(0, 6);
                 const page2Cards = cardData.slice(6, 12);
-
                 const page1Grid = document.createElement('div');
                 page1Grid.id = 'page1';
                 page1Grid.className = 'case-grid';
                 page1Grid.innerHTML = generateCardsHTML(page1Cards);
                 container.appendChild(page1Grid);
-
                 const page2Grid = document.createElement('div');
                 page2Grid.id = 'page2';
                 page2Grid.className = 'case-grid hidden';
@@ -997,10 +262,7 @@
                     page2Grid.innerHTML = generateCardsHTML(page2Cards);
                 }
                 container.appendChild(page2Grid);
-
                 allCards = [...document.querySelectorAll('.case-card')];
-
-                // 初始化时绑定卡片点击事件
                 allCards.forEach(card => {
                     card.addEventListener('click', function(e) {
                         if (e.target.classList.contains('case-checkbox')) return;
@@ -1028,7 +290,7 @@
                              data-highlight-list="${item.highlights.join(',')}"
                              data-quarter="${item.date}">
                             <input type="checkbox" class="case-checkbox" data-id="${item.id}">
-                            <img class="card-bg" src="${item.photo}" alt="${item.theme}" loading="lazy">
+                            <img class="card-bg" src="${item.photo}" alt="${item.theme}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%232d3748%22 width=%22400%22 height=%22300%22/><text fill=%22%23999%22 font-size=%2220%22 x=%22180%22 y=%22160%22>暂无图片</text></svg>'">
                             <div class="card-content">
                                 <div class="card-tags">
                                     <span class="card-tag type">🏷️ ${item.activityType}</span>
@@ -1043,22 +305,14 @@
                                     <span class="card-category">${item.theme}</span>
                                 </div>
                                 <div class="card-meta">
-                                    <div class="card-meta-item">
-                                        <span class="card-meta-icon">🚗</span> ${item.dealer}
-                                    </div>
-                                    <div class="card-meta-item">
-                                        <span class="card-meta-icon">📅</span> ${item.date}
-                                    </div>
-                                    <div class="card-meta-item">
-                                        <span class="card-meta-icon">📍</span> ${item.region}
-                                    </div>
+                                    <div class="card-meta-item"><span class="card-meta-icon">🚗</span> ${item.dealer}</div>
+                                    <div class="card-meta-item"><span class="card-meta-icon">📅</span> ${item.date}</div>
+                                    <div class="card-meta-item"><span class="card-meta-icon">📍</span> ${item.region}</div>
                                 </div>
                             </div>
                             <div class="card-content-hidden">
                                 <h2 class="card-title">${item.title}</h2>
-                                <div class="case-description">
-                                    <p class="description-text">${item.desc}</p>
-                                </div>
+                                <div class="case-description"><p class="description-text">${item.desc}</p></div>
                             </div>
                         </div>
                     `;
@@ -1069,7 +323,6 @@
             renderCards();
             allCards = [...document.querySelectorAll('.case-card')];
 
-            // 翻页逻辑
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const pageButtons = document.querySelectorAll('.page-btn[data-page]');
@@ -1092,13 +345,10 @@
                 prevBtn.disabled = (pageNum === 1);
                 nextBtn.disabled = (pageNum === 2 || !page2 || page2.children.length === 0);
                 currentPage = pageNum;
-
-                // 绑定内部案例卡片点击事件
                 const currentContainer = pageNum === 1 ? page1 : page2;
                 if (currentContainer) {
                     currentContainer.querySelectorAll('.case-card').forEach(card => {
                         card.addEventListener('click', function(e) {
-                            // 排除复选框点击
                             if (e.target.classList.contains('case-checkbox')) return;
                             openModal(this);
                         });
@@ -1118,7 +368,7 @@
             nextBtn.addEventListener('click', () => { if (currentPage < 2 && page2 && page2.children.length > 0) showPage(currentPage + 1); });
             showPage(1);
 
-            // 浮窗功能
+            // 浮窗
             const modalOverlay = document.getElementById('modalOverlay');
             const modalClose = document.getElementById('modalClose');
             const modalDownload = document.getElementById('modalDownload');
@@ -1131,20 +381,15 @@
                 const id = card.dataset.id;
                 const data = cardData.find(d => d.id == id);
                 if (!data) return;
-
                 modalImage.src = data.photo;
                 modalImage.alt = data.title;
                 modalTitle.innerText = `No.${data.id} ${data.theme}`;
-
-                // 控制下载按钮显示
                 if (data.pdfUrl) {
                     modalDownload.href = data.pdfUrl;
                     modalDownload.classList.add('show');
                 } else {
                     modalDownload.classList.remove('show');
                 }
-
-                // 生成紧凑表格HTML
                 modalDetails.innerHTML = `
                     <div class="compact-section">
                         <h4>基础信息</h4>
@@ -1170,10 +415,7 @@
                         </div>
                     </div>
                 `;
-
-                // 清空旧描述区域
                 modalDescription.innerText = '';
-
                 modalOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -1188,7 +430,7 @@
             document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
 
-            // ---------- 构建筛选菜单 ----------
+            // ---------- 筛选菜单 ----------
             const allClientTypes = new Set();
             const allActivityTypes = new Set();
             const allProducts = new Set();
@@ -1213,7 +455,6 @@
 
             const filterMenus = document.getElementById('filterMenus');
             filterMenus.innerHTML = '';
-
             const selected = {
                 region: new Set(),
                 type: new Set(),
@@ -1251,7 +492,6 @@
                     tag.className = 'filter-tag';
                     tag.textContent = value;
                     tag.dataset.value = value;
-
                     let count = 0;
                     if (cat.isArray) {
                         count = cardData.filter(d => d[cat.dataField].includes(value)).length;
@@ -1262,7 +502,6 @@
                     countSpan.className = 'count';
                     countSpan.textContent = count;
                     tag.appendChild(countSpan);
-
                     tag.addEventListener('click', function() {
                         if (selected[cat.key].has(value)) {
                             selected[cat.key].delete(value);
@@ -1275,25 +514,20 @@
                         if (allBtn) allBtn.classList.remove('active');
                         filterCards();
                     });
-
                     itemsDiv.appendChild(tag);
                 });
-
                 menuDiv.appendChild(itemsDiv);
                 filterMenus.appendChild(menuDiv);
             });
 
-            // 筛选函数
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
 
             function filterCards() {
                 const keyword = searchInput.value.trim().toLowerCase();
                 const cards = document.querySelectorAll('.case-card');
-
                 cards.forEach(card => {
                     let match = true;
-
                     if (selected.region.size > 0 && !selected.region.has(card.dataset.region)) match = false;
                     if (match && selected.type.size > 0 && !selected.type.has(card.dataset.type)) match = false;
                     if (match && selected.client.size > 0) {
@@ -1329,28 +563,22 @@
                         if (!found) match = false;
                     }
                     if (match && selected.quarter.size > 0 && !selected.quarter.has(card.dataset.quarter)) match = false;
-
                     if (match && keyword) {
                         const title = card.querySelector('.card-content-hidden .card-title')?.innerText.toLowerCase() || '';
                         const desc = card.querySelector('.card-content-hidden .description-text')?.innerText.toLowerCase() || '';
                         match = title.includes(keyword) || desc.includes(keyword);
                     }
-
                     card.style.display = match ? '' : 'none';
                 });
             }
 
-            function handleSearch() { filterCards(); }
-            searchInput.addEventListener('input', handleSearch);
-            searchButton.addEventListener('click', handleSearch);
-            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); handleSearch(); } });
-
+            searchInput.addEventListener('input', filterCards);
+            searchButton.addEventListener('click', filterCards);
+            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); filterCards(); } });
             filterCards();
 
-            // ========== PPT生成功能 ==========
+            // PPT生成
             const generatePPTBtn = document.getElementById('generatePPTBtn');
-
-            // 复选框点击事件（阻止冒泡到卡片）
             document.addEventListener('change', function(e) {
                 if (e.target.classList.contains('case-checkbox')) {
                     const card = e.target.closest('.case-card');
@@ -1361,8 +589,6 @@
                     }
                 }
             });
-
-            // 复选框点击阻止冒泡
             document.addEventListener('click', function(e) {
                 if (e.target.classList.contains('case-checkbox')) {
                     e.stopPropagation();
@@ -1370,35 +596,26 @@
             });
 
             generatePPTBtn.addEventListener('click', function() {
-                // 检查PPT库是否加载
                 if (typeof PptxGenJS === 'undefined') {
                     alert('PPT库加载失败，请刷新页面后重试！');
                     return;
                 }
-
-                // 获取选中的案例
                 const checkedBoxes = document.querySelectorAll('.case-checkbox:checked');
                 if (checkedBoxes.length === 0) {
                     alert('请先选择要导出的案例！');
                     return;
                 }
-
                 const selectedIds = Array.from(checkedBoxes).map(cb => cb.dataset.id);
                 const selectedCases = cardData.filter(item => selectedIds.includes(String(item.id)));
-
                 if (selectedCases.length === 0) {
                     alert('未找到选中的案例数据！');
                     return;
                 }
-
                 try {
-                    // 创建PPT对象
                     const pptx = new PptxGenJS();
                     pptx.layout = 'LAYOUT_16x9';
                     pptx.title = '奔驰营销案例库精选';
                     pptx.author = '奔驰案例库';
-
-                    // 封面页
                     const coverSlide = pptx.addSlide();
                     coverSlide.background = { color: '1a1e24' };
                     coverSlide.addText('奔驰营销案例库精选', {
@@ -1413,36 +630,26 @@
                         fontSize: 20, color: 'f15a23',
                         align: 'center'
                     });
-
-                    // 生成每个选中案例的页面
                     selectedCases.forEach((item, index) => {
                         const slide = pptx.addSlide();
-
-                        // 标题栏
                         slide.addShape(pptx.ShapeType.rect, {
                             x: 0, y: 0, w: 13.33, h: 1.0,
                             fill: { color: 'f15a24' }
                         });
-
                         slide.addText(`No.${item.id} ${item.theme}`, {
                             x: 0.5, y: 0.25, w: 12.3, h: 0.6,
                             fontSize: 26, bold: true, color: 'FFFFFF'
                         });
-
-                        // 左侧图片区域
                         slide.addShape(pptx.ShapeType.rect, {
                             x: 0.4, y: 1.3, w: 5.5, h: 5.2,
                             fill: { color: 'e8e8e8' },
                             line: { color: 'cccccc' }
                         });
-
                         slide.addText('[图片]', {
                             x: 0.4, y: 3.7, w: 5.5, h: 0.5,
                             fontSize: 14, color: '999999',
                             align: 'center'
                         });
-
-                        // 右侧信息区域
                         let yPos = 1.4;
                         const infoItems = [
                             { label: '经销商', value: `${item.dealer} · ${item.region}` },
@@ -1453,7 +660,6 @@
                             { label: '特色内容', value: item.features.join('、') },
                             { label: '亮点', value: item.highlights.join('、') }
                         ];
-
                         infoItems.forEach(info => {
                             if (info.value) {
                                 slide.addText(info.label, {
@@ -1467,16 +673,12 @@
                                 yPos += 0.55;
                             }
                         });
-
-                        // 页码
                         slide.addText(`第 ${index + 1} / ${selectedCases.length} 页`, {
                             x: 6.2, y: 6.0, w: 6.5, h: 0.4,
                             fontSize: 11, color: '999999',
                             align: 'right'
                         });
                     });
-
-                    // 保存文件
                     pptx.writeFile({ fileName: '奔驰案例库.pptx' })
                         .then(() => {
                             alert(`PPT生成成功！已导出${selectedCases.length}个案例。`);
@@ -1484,7 +686,6 @@
                         .catch(err => {
                             alert('PPT生成失败：' + err.message);
                         });
-
                 } catch (error) {
                     alert('PPT生成失败：' + error.message);
                 }
@@ -1493,23 +694,20 @@
 
         // ========== 外部案例模块 ==========
         (function() {
-            // 外部案例数据 - 完整数据
             externalData = [
-    {'id': 'w1', 'brand': '蔚来', 'brandType': 'OEM', 'activityName': '盟主诞生！蔚来道服武林争霸赛圆满落幕', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6961eb0700000000220232eb?source=webshare&xhsshare=pc_web&xsec_token=AB8UigSFwjN84bG-0vkGGsaZImScwuhrstNxUZfjvTvMg=&xsec_source=pc_share', 'photo': '/w1.png', 'videoLink': 'http://sns-video-bd.xhscdn.com/stream/1/110/258/01e961d76b055201010370019ba67f0296_258.mp4?sign=cb6540e0f0171ba3e055d847a4262eb4&t=69e461b4', 'content': '2026年1月9日，上海——历时两天的蔚来道路服务武林争霸赛决赛落下帷幕。经过驾驶技能与服务能力的全方位高强度考验，来自武汉公司的专员郑志强凭借其精湛的操控技术与卓越的服务应变能力，在32位全国顶尖高手中脱颖而出，荣膺本届大赛总冠军。北京公司胡文斌与昆明公司赵洁分获亚军、季军。 \t 比赛中，所有选手需驾驭着车长超5.1米、轴距超3.1米的大型SUV乐道L90，在封闭场地内展开对决。他们必须连续攻克S弯绕桩、紧急变线、连续U型弯、双8字圆环及「3进2退」极限库内调头等严苛科目，全程需做到零失误、少碰桩、短耗时。在如此狭小的空间内精准操控大型车辆，对专员的空间判断、重心感知与细腻操控提出了极致要求。 \t 在这条需3分钟才能完成的复合赛道上，重庆公司的梅鑫展现了压倒性的实力——他驾驭着乐道L90，仅用58秒便一气呵成，流畅过关，其速度与稳定性的结合，令现场惊叹。 \t 这场「武林争霸」不仅是对个人能力的淬炼，更是对蔚来道路服务专业标准的集中诠释。赛事中锤炼出的追求极致的态度与可靠的服务能力，将伴随每一位专员，持续守护用户的每一程出行。 \t 👆点击视频，直击极限挑战现场，感受硬核瞬间！ #蔚来# #蔚来道路服务#', 'author': '蔚来', 'activityDesc': '蔚来道服武林争霸赛圆满落幕', 'highlight': '以武林争霸包装服务技能比武', 'themeClass': '服务宣传', 'purpose': '展示专业服务能力', 'form': '宣传短片', 'effect': '中热度', 'specialTag': '比赛', 'channel': '小红书'},
-    {'id': 'w2', 'brand': '途虎', 'brandType': 'OES', 'activityName': '汽车人张兴朝准备就绪，回家过年！', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6985b70c000000001a020701?source=webshare&xhsshare=pc_web&xsec_token=AB1Scfr3FriIqlpRZ7YUg3xPN0Cri5yLIDwLeZ8oAEeWo=&xsec_source=pc_share', 'photo': '/w2.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e985b6cfb7549c010370019c325353d8_258.mp4?sign=bb2f50a991d284a5c7c351d2e7deacbb&t=69e8fef6', 'content': '途虎春节不打烊，开车回家一路稳当。全国超8000家途虎养车工场店，一路护航。马年上途虎，哎玛真便宜。#途虎养车#  #外星从#  #张兴朝#  #李嘉诚#', 'author': '途虎养车', 'activityDesc': '途虎春节不打烊护航车主返乡', 'highlight': '全国超8000家门店提供春节服务', 'themeClass': '服务宣传', 'purpose': '宣传具体服务', 'form': '宣传短片', 'effect': '爆款', 'specialTag': '明星', 'channel': '小红书'},
-    {'id': 'w3', 'brand': '途虎', 'brandType': 'OES', 'activityName': '中汽中心携手途虎养车开启混动润滑油冬测', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6970771b000000000e03f66c?source=webshare&xhsshare=pc_web&xsec_token=ABTPepxz5WZD9uTryC68NFpBKodg4Qhxpy_iLTAnMWI3Y=&xsec_source=pc_share', 'photo': '/w3.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/79/110/258/01e97044433762384f0370019bdf51ed94_258.mp4?sign=77941ae26d915f7dadc08dd06076e35e&t=69e8fef8', 'content': '针对混动车辆发动机频繁油电切换和间歇性运转的特殊工况，在极寒环境下进行性能验证！#超级金牌评测# #嘉实多# #出光# #驾驰# #中汽中心# #途虎养车#', 'author': '途虎养车', 'activityDesc': '中汽中心携手途虎开展润滑油冬测', 'highlight': '混动极寒工况润滑油性能验证', 'themeClass': '产品测评', 'purpose': '宣传产品性能', 'form': '宣传短片', 'effect': '低热度', 'specialTag': '', 'channel': '小红书'},
-    {'id': 'w4', 'brand': '米其林', 'brandType': '零配件厂商', 'activityName': '📢米其林首档微综艺，此刻真正开局——', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/695dda1c000000000d009557?source=webshare&xhsshare=pc_web&xsec_token=ABu_SCmTgjLVvDZPmVsOtUxEkIXK7i1WuhzobpQW9a5Bw=&xsec_source=pc_share', 'photo': '/w4.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/79/110/258/01e95dda1b6068dc4f0370019b96af735c_258.mp4?sign=d2aa05fab07bd4f737f2c4b3282406de&t=69e8fefa', 'content': '20位挑战者，已集结完毕👏🏻👏🏻👏🏻 迎战应变、协作与硬实力的重重关卡🚧 \t 🥊没有脚本，只有真实发生❗️ 🥊没有 NG，每一秒都无法重来❗️ \t 🛞米其林首档微综艺 🎬︎《有米撑腰狠稳狠尽兴》 1月7日高燃上线🎥 真正的对决🏆在此刻全面开战💥 #米其林首档微综艺# #有米撑腰狠稳狠尽兴# #米其林# #米其林轮胎# #米其林中国# #综艺#', 'author': '米其林中国', 'activityDesc': '米其林首档微综艺正式上线', 'highlight': '无脚本真实挑战赛打造高燃内容', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '微综艺', 'effect': '较高热度', 'specialTag': '微综艺', 'channel': '小红书'},
-    {'id': 'w5', 'brand': '嘉实多', 'brandType': '零配件厂商', 'activityName': '灵魂修理站：送你三次爆爽人生，你的选择是？', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/696a25bf000000000a02bffd?source=webshare&xhsshare=pc_web&xsec_token=AB17tLmmIL4NLImQ660bh5NBAnO4nPaCsbuhzLCIo-lMM=&xsec_source=pc_share', 'photo': '/w5.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e96a25821a4e04010370019bc6ab0836_258.mp4?sign=f8576417b971c1c4d31144779c905307&t=69e8fefc', 'content': '#嘉实多灵魂修理站# 正式上线！ 嘉实多×万合天宜联合出品 导演：赖冠霖｜编剧：张华宇 领衔主演：张本煜 假如，你的灵魂有 3 次“爆爽人生体验”机会，不读档、不重来、不能反悔，你会怎么选？ 是体验一次从没活过的人生，还是回头，把没来得及的遗憾补完？ 一起走进灵魂修理站，一起寻找属于你的答案！ #嘉实多机油# #万合天宜# #赖冠霖# #张本煜#', 'author': '嘉实多Castrol', 'activityDesc': '嘉实多推出《灵魂修理站》短片', 'highlight': '赖冠霖执导张本煜领衔主演', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '高热度', 'specialTag': '明星', 'channel': '小红书'},
-    {'id': 'w6', 'brand': '嘉实多', 'brandType': '零配件厂商', 'activityName': '这一年你也走了不少路吧 记录的公里数里，有着每个全力以赴的自己', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/69833528000000001a034f15?source=webshare&xhsshare=pc_web&xsec_token=ABvh6Nxh5y5ZwrVHWFOIVwMukLO2qxrP6eWPMpKOWFLPU=&xsec_source=pc_share', 'photo': '/w6.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e98321dbb782dc010370019c2888b3ad_258.mp4?sign=a7cb6a3bf265fcfa6aa189bfb71864b3&t=69e8fefe', 'content': '这一年你也走了不少路吧 记录的公里数里，有着每个全力以赴的自己； 新的一年，发动引擎，望向前方，一起驶向心之所向。 哪里有努力赶路的你，哪里就有嘉实多。 #嘉实多#  #王一博嘉实多品牌代言人#  #嘉实多新春贺岁大片#  #每一程为你嘉油#', 'author': '嘉实多Castrol', 'activityDesc': '嘉实多发布新春贺岁大片致敬赶路者', 'highlight': '品牌代言人王一博助力宣传', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '爆款', 'specialTag': '明星', 'channel': '小红书'},
-    {'id': 'w7', 'brand': '美孚润滑油', 'brandType': '零配件厂商', 'activityName': '用户形象系列短片《加足马力每一程》', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6968cfe5000000002103d9b7?source=webshare&xhsshare=pc_web&xsec_token=ABQi7bxEo-81Pmh105FSGedqagdg0F4zuO_iGuKGf52pY=&xsec_source=pc_share', 'photo': '/w7.jpg', 'videoLink': 'http://sns-video-hs.xhscdn.com/stream/79/110/258/01e969825e9e17454f0370019bc4258140_258.mp4?sign=4e18c111009259c0bcd064ade953965e&t=69e46ccc', 'content': '15年探索大河源头，将每一程的挑战化为动力。 当探索的里程更长，感受才能超乎寻常。 美孚1号™成功挑战25,000公里换油周期，助力引擎表现如新。 2026#美孚助你加足马力每一程#', 'author': '美孚乘用车润滑油', 'activityDesc': '美孚1号挑战25000公里换油周期', 'highlight': '推出各行业代表人物的品牌宣传系列视频《加足马力每一程》，展现美孚在极寒、竞速、沙漠等极端用车环境下的强硬实力', 'themeClass': '产品测评', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '低热度', 'specialTag': '', 'channel': '小红书'},
-    {'id': 'w8', 'brand': '蔚来', 'brandType': 'OEM', 'activityName': '蔚来道服员工故事-赵洁', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://v.douyin.com/6dkizwcImgI/', 'photo': '/w8.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '以赵洁的女性员工故事为主题， 用典型案例继续夯实服务人员的业务专业性', 'highlight': '女性故事，包装员工形象', 'themeClass': '员工故事', 'purpose': '包装员工形象', 'form': '创意短片', 'effect': '', 'specialTag': '女性', 'channel': '抖音'},
-    {'id': 'w9', 'brand': '问界', 'brandType': 'OEM', 'activityName': '问界臻谈录', 'date': '2026Q1', 'category': '视频/海报', 'linkUrl': '无', 'photo': '/w9.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '', 'highlight': '车主访谈，宣传问界售后无忧服务', 'themeClass': '车主故事', 'purpose': '', 'form': '车主访谈', 'effect': '', 'specialTag': '', 'channel': '视频号'},
-    {'id': 'w10', 'brand': '问界', 'brandType': 'OEM', 'activityName': '漆面快速维修服务宣传片', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.douyin.com/user/MS4wLjABAAAAaw102QRGAKMrt0kBQPonunSbiLoiW3T5PCnITuYRo3jh7Q6rO-EdjAiKPTbjarls/search/%E9%97%AE%E7%95%8C%E8%BD%A6%E6%BC%86%E7%84%95%E6%96%B0%E6%9C%8D%E5%8A%A1?aid=8760fd42-3f36-444f-b263-0e567bf46123&modal_id=7603306125786627450&type=general', 'photo': '/w10.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '账号名称：问界用户服务，问界推出漆面快修服务，通过创意宣传片拍摄和联动KOC采访进行传播', 'highlight': '宣传车漆焕新服务，免费取送服务', 'themeClass': '服务宣传', 'purpose': '宣传具体服务', 'form': 'KOC合作', 'effect': '', 'specialTag': '', 'channel': '视频号'},
-    {'id': 'w11', 'brand': '中升维修', 'brandType': 'OES', 'activityName': '中升维修品牌公域建设', 'date': '2025Q4', 'category': '视频', 'linkUrl': 'https://www.douyin.com/user/MS4wLjABAAAAfP3Co4FsLEARoZspjmZaSECP9xDsYq0RO1W97jbr6IyZe5n5faN8ixUdU4yNkzbv?from_tab_name=main&modal_id=7585397160695319817', 'photo': '/w11.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '日常品牌服务宣传', 'highlight': '搭建公域品牌宣传，视频', 'themeClass': '品牌宣传', 'purpose': '品牌公域建设', 'form': '创意短片', 'effect': '', 'specialTag': '', 'channel': '抖音'}
-];
+                {'id': 'w1', 'brand': '蔚来', 'brandType': 'OEM', 'activityName': '盟主诞生！蔚来道服武林争霸赛圆满落幕', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6961eb0700000000220232eb?source=webshare&xhsshare=pc_web&xsec_token=AB8UigSFwjN84bG-0vkGGsaZImScwuhrstNxUZfjvTvMg=&xsec_source=pc_share', 'photo': 'w1.png', 'videoLink': 'http://sns-video-bd.xhscdn.com/stream/1/110/258/01e961d76b055201010370019ba67f0296_258.mp4?sign=cb6540e0f0171ba3e055d847a4262eb4&t=69e461b4', 'content': '2026年1月9日，上海——历时两天的蔚来道路服务武林争霸赛决赛落下帷幕。经过驾驶技能与服务能力的全方位高强度考验，来自武汉公司的专员郑志强凭借其精湛的操控技术与卓越的服务应变能力，在32位全国顶尖高手中脱颖而出，荣膺本届大赛总冠军。北京公司胡文斌与昆明公司赵洁分获亚军、季军。 \t 比赛中，所有选手需驾驭着车长超5.1米、轴距超3.1米的大型SUV乐道L90，在封闭场地内展开对决。他们必须连续攻克S弯绕桩、紧急变线、连续U型弯、双8字圆环及「3进2退」极限库内调头等严苛科目，全程需做到零失误、少碰桩、短耗时。在如此狭小的空间内精准操控大型车辆，对专员的空间判断、重心感知与细腻操控提出了极致要求。 \t 在这条需3分钟才能完成的复合赛道上，重庆公司的梅鑫展现了压倒性的实力——他驾驭着乐道L90，仅用58秒便一气呵成，流畅过关，其速度与稳定性的结合，令现场惊叹。 \t 这场「武林争霸」不仅是对个人能力的淬炼，更是对蔚来道路服务专业标准的集中诠释。赛事中锤炼出的追求极致的态度与可靠的服务能力，将伴随每一位专员，持续守护用户的每一程出行。 \t 👆点击视频，直击极限挑战现场，感受硬核瞬间！ #蔚来# #蔚来道路服务#', 'author': '蔚来', 'activityDesc': '蔚来道服武林争霸赛圆满落幕', 'highlight': '以武林争霸包装服务技能比武', 'themeClass': '服务宣传', 'purpose': '展示专业服务能力', 'form': '宣传短片', 'effect': '中热度', 'specialTag': '比赛', 'channel': '小红书'},
+                {'id': 'w2', 'brand': '途虎', 'brandType': 'OES', 'activityName': '汽车人张兴朝准备就绪，回家过年！', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6985b70c000000001a020701?source=webshare&xhsshare=pc_web&xsec_token=AB1Scfr3FriIqlpRZ7YUg3xPN0Cri5yLIDwLeZ8oAEeWo=&xsec_source=pc_share', 'photo': 'w2.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e985b6cfb7549c010370019c325353d8_258.mp4?sign=bb2f50a991d284a5c7c351d2e7deacbb&t=69e8fef6', 'content': '途虎春节不打烊，开车回家一路稳当。全国超8000家途虎养车工场店，一路护航。马年上途虎，哎玛真便宜。#途虎养车#  #外星从#  #张兴朝#  #李嘉诚#', 'author': '途虎养车', 'activityDesc': '途虎春节不打烊护航车主返乡', 'highlight': '全国超8000家门店提供春节服务', 'themeClass': '服务宣传', 'purpose': '宣传具体服务', 'form': '宣传短片', 'effect': '爆款', 'specialTag': '明星', 'channel': '小红书'},
+                {'id': 'w3', 'brand': '途虎', 'brandType': 'OES', 'activityName': '中汽中心携手途虎养车开启混动润滑油冬测', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6970771b000000000e03f66c?source=webshare&xhsshare=pc_web&xsec_token=ABTPepxz5WZD9uTryC68NFpBKodg4Qhxpy_iLTAnMWI3Y=&xsec_source=pc_share', 'photo': 'w3.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/79/110/258/01e97044433762384f0370019bdf51ed94_258.mp4?sign=77941ae26d915f7dadc08dd06076e35e&t=69e8fef8', 'content': '针对混动车辆发动机频繁油电切换和间歇性运转的特殊工况，在极寒环境下进行性能验证！#超级金牌评测# #嘉实多# #出光# #驾驰# #中汽中心# #途虎养车#', 'author': '途虎养车', 'activityDesc': '中汽中心携手途虎开展润滑油冬测', 'highlight': '混动极寒工况润滑油性能验证', 'themeClass': '产品测评', 'purpose': '宣传产品性能', 'form': '宣传短片', 'effect': '低热度', 'specialTag': '', 'channel': '小红书'},
+                {'id': 'w4', 'brand': '米其林', 'brandType': '零配件厂商', 'activityName': '📢米其林首档微综艺，此刻真正开局——', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/695dda1c000000000d009557?source=webshare&xhsshare=pc_web&xsec_token=ABu_SCmTgjLVvDZPmVsOtUxEkIXK7i1WuhzobpQW9a5Bw=&xsec_source=pc_share', 'photo': 'w4.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/79/110/258/01e95dda1b6068dc4f0370019b96af735c_258.mp4?sign=d2aa05fab07bd4f737f2c4b3282406de&t=69e8fefa', 'content': '20位挑战者，已集结完毕👏🏻👏🏻👏🏻 迎战应变、协作与硬实力的重重关卡🚧 \t 🥊没有脚本，只有真实发生❗️ 🥊没有 NG，每一秒都无法重来❗️ \t 🛞米其林首档微综艺 🎬︎《有米撑腰狠稳狠尽兴》 1月7日高燃上线🎥 真正的对决🏆在此刻全面开战💥 #米其林首档微综艺# #有米撑腰狠稳狠尽兴# #米其林# #米其林轮胎# #米其林中国# #综艺#', 'author': '米其林中国', 'activityDesc': '米其林首档微综艺正式上线', 'highlight': '无脚本真实挑战赛打造高燃内容', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '微综艺', 'effect': '较高热度', 'specialTag': '微综艺', 'channel': '小红书'},
+                {'id': 'w5', 'brand': '嘉实多', 'brandType': '零配件厂商', 'activityName': '灵魂修理站：送你三次爆爽人生，你的选择是？', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/696a25bf000000000a02bffd?source=webshare&xhsshare=pc_web&xsec_token=AB17tLmmIL4NLImQ660bh5NBAnO4nPaCsbuhzLCIo-lMM=&xsec_source=pc_share', 'photo': 'w5.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e96a25821a4e04010370019bc6ab0836_258.mp4?sign=f8576417b971c1c4d31144779c905307&t=69e8fefc', 'content': '#嘉实多灵魂修理站# 正式上线！ 嘉实多×万合天宜联合出品 导演：赖冠霖｜编剧：张华宇 领衔主演：张本煜 假如，你的灵魂有 3 次“爆爽人生体验”机会，不读档、不重来、不能反悔，你会怎么选？ 是体验一次从没活过的人生，还是回头，把没来得及的遗憾补完？ 一起走进灵魂修理站，一起寻找属于你的答案！ #嘉实多机油# #万合天宜# #赖冠霖# #张本煜#', 'author': '嘉实多Castrol', 'activityDesc': '嘉实多推出《灵魂修理站》短片', 'highlight': '赖冠霖执导张本煜领衔主演', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '高热度', 'specialTag': '明星', 'channel': '小红书'},
+                {'id': 'w6', 'brand': '嘉实多', 'brandType': '零配件厂商', 'activityName': '这一年你也走了不少路吧 记录的公里数里，有着每个全力以赴的自己', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/69833528000000001a034f15?source=webshare&xhsshare=pc_web&xsec_token=ABvh6Nxh5y5ZwrVHWFOIVwMukLO2qxrP6eWPMpKOWFLPU=&xsec_source=pc_share', 'photo': 'w6.jpg', 'videoLink': 'http://sns-video-qc.xhscdn.com/stream/1/110/258/01e98321dbb782dc010370019c2888b3ad_258.mp4?sign=a7cb6a3bf265fcfa6aa189bfb71864b3&t=69e8fefe', 'content': '这一年你也走了不少路吧 记录的公里数里，有着每个全力以赴的自己； 新的一年，发动引擎，望向前方，一起驶向心之所向。 哪里有努力赶路的你，哪里就有嘉实多。 #嘉实多#  #王一博嘉实多品牌代言人#  #嘉实多新春贺岁大片#  #每一程为你嘉油#', 'author': '嘉实多Castrol', 'activityDesc': '嘉实多发布新春贺岁大片致敬赶路者', 'highlight': '品牌代言人王一博助力宣传', 'themeClass': '品牌宣传', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '爆款', 'specialTag': '明星', 'channel': '小红书'},
+                {'id': 'w7', 'brand': '美孚润滑油', 'brandType': '零配件厂商', 'activityName': '用户形象系列短片《加足马力每一程》', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.xiaohongshu.com/discovery/item/6968cfe5000000002103d9b7?source=webshare&xhsshare=pc_web&xsec_token=ABQi7bxEo-81Pmh105FSGedqagdg0F4zuO_iGuKGf52pY=&xsec_source=pc_share', 'photo': 'w7.jpg', 'videoLink': 'http://sns-video-hs.xhscdn.com/stream/79/110/258/01e969825e9e17454f0370019bc4258140_258.mp4?sign=4e18c111009259c0bcd064ade953965e&t=69e46ccc', 'content': '15年探索大河源头，将每一程的挑战化为动力。 当探索的里程更长，感受才能超乎寻常。 美孚1号™成功挑战25,000公里换油周期，助力引擎表现如新。 2026#美孚助你加足马力每一程#', 'author': '美孚乘用车润滑油', 'activityDesc': '美孚1号挑战25000公里换油周期', 'highlight': '推出各行业代表人物的品牌宣传系列视频《加足马力每一程》，展现美孚在极寒、竞速、沙漠等极端用车环境下的强硬实力', 'themeClass': '产品测评', 'purpose': '扩大品牌声量', 'form': '宣传短片', 'effect': '低热度', 'specialTag': '', 'channel': '小红书'},
+                {'id': 'w8', 'brand': '蔚来', 'brandType': 'OEM', 'activityName': '蔚来道服员工故事-赵洁', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://v.douyin.com/6dkizwcImgI/', 'photo': 'w8.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '以赵洁的女性员工故事为主题， 用典型案例继续夯实服务人员的业务专业性', 'highlight': '女性故事，包装员工形象', 'themeClass': '员工故事', 'purpose': '包装员工形象', 'form': '创意短片', 'effect': '', 'specialTag': '女性', 'channel': '抖音'},
+                {'id': 'w9', 'brand': '问界', 'brandType': 'OEM', 'activityName': '问界臻谈录', 'date': '2026Q1', 'category': '视频/海报', 'linkUrl': '无', 'photo': 'w9.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '', 'highlight': '车主访谈，宣传问界售后无忧服务', 'themeClass': '车主故事', 'purpose': '', 'form': '车主访谈', 'effect': '', 'specialTag': '', 'channel': '视频号'},
+                {'id': 'w10', 'brand': '问界', 'brandType': 'OEM', 'activityName': '漆面快速维修服务宣传片', 'date': '2026Q1', 'category': '视频', 'linkUrl': 'https://www.douyin.com/user/MS4wLjABAAAAaw102QRGAKMrt0kBQPonunSbiLoiW3T5PCnITuYRo3jh7Q6rO-EdjAiKPTbjarls/search/%E9%97%AE%E7%95%8C%E8%BD%A6%E6%BC%86%E7%84%95%E6%96%B0%E6%9C%8D%E5%8A%A1?aid=8760fd42-3f36-444f-b263-0e567bf46123&modal_id=7603306125786627450&type=general', 'photo': 'w10.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '账号名称：问界用户服务，问界推出漆面快修服务，通过创意宣传片拍摄和联动KOC采访进行传播', 'highlight': '宣传车漆焕新服务，免费取送服务', 'themeClass': '服务宣传', 'purpose': '宣传具体服务', 'form': 'KOC合作', 'effect': '', 'specialTag': '', 'channel': '视频号'},
+                {'id': 'w11', 'brand': '中升维修', 'brandType': 'OES', 'activityName': '中升维修品牌公域建设', 'date': '2025Q4', 'category': '视频', 'linkUrl': 'https://www.douyin.com/user/MS4wLjABAAAAfP3Co4FsLEARoZspjmZaSECP9xDsYq0RO1W97jbr6IyZe5n5faN8ixUdU4yNkzbv?from_tab_name=main&modal_id=7585397160695319817', 'photo': 'w11.jpg', 'videoLink': '', 'content': '', 'author': '', 'activityDesc': '日常品牌服务宣传', 'highlight': '搭建公域品牌宣传，视频', 'themeClass': '品牌宣传', 'purpose': '品牌公域建设', 'form': '创意短片', 'effect': '', 'specialTag': '', 'channel': '抖音'}
+            ];
 
-
-            // 处理数据
             externalData.forEach(item => {
                 item.displayTitle = `No.${item.id} ${item.activityName}`;
                 item.title = item.displayTitle;
@@ -1518,22 +716,17 @@
             });
 
             let currentExternalPage = 1;
-            let allExternalCards = [];
 
-            // 渲染外部案例卡片
             function renderExternalCards() {
                 const container = document.getElementById('gridContainerExternal');
                 container.innerHTML = '';
-
                 const page1Cards = externalData.slice(0, 6);
                 const page2Cards = externalData.slice(6, 12);
-
                 const page1Grid = document.createElement('div');
                 page1Grid.id = 'externalPage1';
                 page1Grid.className = 'case-grid';
                 page1Grid.innerHTML = generateExternalCardsHTML(page1Cards);
                 container.appendChild(page1Grid);
-
                 const page2Grid = document.createElement('div');
                 page2Grid.id = 'externalPage2';
                 page2Grid.className = 'case-grid hidden';
@@ -1541,45 +734,33 @@
                     page2Grid.innerHTML = generateExternalCardsHTML(page2Cards);
                 }
                 container.appendChild(page2Grid);
-
-                allExternalCards = [...container.querySelectorAll('.case-card')];
             }
 
             function generateExternalCardsHTML(cards) {
                 let html = '';
                 cards.forEach(item => {
-                    // 构建标签
                     let tagsHTML = '';
-                    
-                    // 主题分类（固定显示，可能有顿号）
                     splitTags(item.themeClass).forEach(tag => {
                         tagsHTML += `<span class="card-tag theme-class">📌 ${tag}</span>`;
                     });
-                    // 目的（可能有顿号）
                     splitTags(item.purpose).forEach(tag => {
                         tagsHTML += `<span class="card-tag purpose">🎯 ${tag}</span>`;
                     });
-                    // 形式（可能有顿号）
                     splitTags(item.form).forEach(tag => {
                         tagsHTML += `<span class="card-tag form">📹 ${tag}</span>`;
                     });
-                    // 发布渠道（可能有顿号）
                     splitTags(item.channel).forEach(tag => {
                         tagsHTML += `<span class="card-tag channel">📢 ${tag}</span>`;
                     });
-                    // 品牌类型
                     if (item.brandType) {
                         tagsHTML += `<span class="card-tag brand-type">${item.brandType}</span>`;
                     }
-                    // 品牌
                     if (item.brand) {
                         tagsHTML += `<span class="card-tag brand">🏢 ${item.brand}</span>`;
                     }
-                    // 特殊标签（可能有顿号）
                     splitTags(item.specialTag).forEach(tag => {
                         tagsHTML += `<span class="card-tag special">⭐ ${tag}</span>`;
                     });
-                    // 传播效果（可能有顿号）
                     splitTags(item.effect).forEach(tag => {
                         tagsHTML += `<span class="card-tag effect">🔥 ${tag}</span>`;
                     });
@@ -1598,20 +779,14 @@
                             <img class="card-bg" src="${item.photo}" alt="${item.activityName}" loading="lazy"
                                  onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%232d3748%22 width=%22400%22 height=%22300%22/><text fill=%22%23999%22 font-size=%2220%22 x=%22180%22 y=%22160%22>暂无图片</text></svg>'">
                             <div class="card-content">
-                                <div class="card-tags">
-                                    ${tagsHTML}
-                                </div>
+                                <div class="card-tags">${tagsHTML}</div>
                                 <div class="card-title">
                                     <span class="card-number">No.${item.id}</span>
                                     <span class="card-category">${item.activityName}</span>
                                 </div>
                                 <div class="card-meta">
-                                    <div class="card-meta-item">
-                                        <span class="card-meta-icon">🏢</span> ${item.brand}
-                                    </div>
-                                    <div class="card-meta-item">
-                                        <span class="card-meta-icon">📅</span> ${item.date}
-                                    </div>
+                                    <div class="card-meta-item"><span class="card-meta-icon">🏢</span> ${item.brand}</div>
+                                    <div class="card-meta-item"><span class="card-meta-icon">📅</span> ${item.date}</div>
                                 </div>
                             </div>
                         </div>
@@ -1622,7 +797,6 @@
 
             renderExternalCards();
 
-            // 外部案例翻页逻辑
             const extPage1 = document.getElementById('externalPage1');
             const extPage2 = document.getElementById('externalPage2');
             const extPageButtons = document.querySelectorAll('#paginationExternal .page-btn[data-page]');
@@ -1659,13 +833,11 @@
             extNextBtn.addEventListener('click', () => { if (currentExternalPage < 2 && extPage2 && extPage2.children.length > 0) showExternalPage(currentExternalPage + 1); });
             showExternalPage(1);
 
-            // 辅助函数：将顿号分隔的字符串拆分成标签数组
             function splitTags(str) {
                 if (!str) return [];
                 return str.split('、').map(s => s.trim()).filter(Boolean);
             }
 
-            // 外部案例筛选菜单 - 新分类结构（支持顿号分隔标签拆分）
             const extCategories = [
                 { name: '主题分类', key: 'themeClass', values: [...new Set(externalData.flatMap(d => splitTags(d.themeClass)))].sort(), dataField: 'themeClass', isArray: false },
                 { name: '品牌性质', key: 'brandType', values: [...new Set(externalData.flatMap(d => splitTags(d.brandType)))].sort(), dataField: 'brandType', isArray: false },
@@ -1679,7 +851,6 @@
 
             const extFilterMenus = document.getElementById('filterMenusExternal');
             extFilterMenus.innerHTML = '';
-
             const extSelected = {
                 themeClass: new Set(),
                 brandType: new Set(),
@@ -1718,13 +889,11 @@
                     tag.className = 'filter-tag';
                     tag.textContent = value;
                     tag.dataset.value = value;
-
                     let count = externalData.filter(d => d[cat.dataField] === value).length;
                     const countSpan = document.createElement('span');
                     countSpan.className = 'count';
                     countSpan.textContent = count;
                     tag.appendChild(countSpan);
-
                     tag.addEventListener('click', function() {
                         if (extSelected[cat.key].has(value)) {
                             extSelected[cat.key].delete(value);
@@ -1737,19 +906,15 @@
                         if (allBtn) allBtn.classList.remove('active');
                         filterExternalCards();
                     });
-
                     itemsDiv.appendChild(tag);
                 });
-
                 menuDiv.appendChild(itemsDiv);
                 extFilterMenus.appendChild(menuDiv);
             });
 
-            // 外部案例筛选函数
             const extSearchInput = document.getElementById('searchInputExternal');
             const extSearchButton = document.getElementById('searchButtonExternal');
 
-            // 辅助函数：检查卡片属性是否包含选中的值（支持顿号分隔）
             function cardHasSelectedValue(cardValue, selectedSet) {
                 if (selectedSet.size === 0) return true;
                 if (!cardValue) return false;
@@ -1763,32 +928,20 @@
             function filterExternalCards() {
                 const keyword = extSearchInput.value.trim().toLowerCase();
                 const cards = document.querySelectorAll('#gridContainerExternal .case-card');
-
                 cards.forEach(card => {
                     let match = true;
-
-                    // 主题分类筛选
                     if (!cardHasSelectedValue(card.dataset.themeClass, extSelected.themeClass)) match = false;
-                    // 品牌性质筛选
                     if (match && !cardHasSelectedValue(card.dataset.brandType, extSelected.brandType)) match = false;
-                    // 品牌筛选
                     if (match && !cardHasSelectedValue(card.dataset.brand, extSelected.brand)) match = false;
-                    // 目的筛选
                     if (match && !cardHasSelectedValue(card.dataset.purpose, extSelected.purpose)) match = false;
-                    // 形式筛选
                     if (match && !cardHasSelectedValue(card.dataset.form, extSelected.form)) match = false;
-                    // 传播效果筛选
                     if (match && !cardHasSelectedValue(card.dataset.effect, extSelected.effect)) match = false;
-                    // 特殊标签筛选
                     if (match && !cardHasSelectedValue(card.dataset.special, extSelected.special)) match = false;
-                    // 发布渠道筛选
                     if (match && !cardHasSelectedValue(card.dataset.channel, extSelected.channel)) match = false;
-
                     if (match && keyword) {
                         const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
                         match = title.includes(keyword);
                     }
-
                     card.style.display = match ? '' : 'none';
                 });
             }
@@ -1797,7 +950,6 @@
             extSearchButton.addEventListener('click', filterExternalCards);
             extSearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') filterExternalCards(); });
 
-            // 外部案例卡片点击 - 打开浮窗
             document.getElementById('gridContainerExternal').addEventListener('click', (e) => {
                 const card = e.target.closest('.case-card');
                 if (card) {
@@ -1809,25 +961,19 @@
                 const id = card.dataset.id;
                 const data = externalData.find(d => d.id == id);
                 if (!data) return;
-
                 const modalImage = document.querySelector('#modalImage img');
                 modalImage.src = data.photo;
                 modalImage.alt = data.title;
-
                 document.getElementById('modalTitle').innerText = `No.${data.id} ${data.activityName}`;
                 document.getElementById('modalDownload').classList.remove('show');
-
-                // 控制原文链接按钮显示
                 const modalLink = document.getElementById('modalLink');
                 if (data.linkUrl) {
                     modalLink.href = data.linkUrl;
                     modalLink.classList.add('show');
-                    // 根据linkLabel显示不同文字和样式
                     const linkText = modalLink.querySelector('span:last-child');
                     if (linkText) {
                         linkText.textContent = data.linkLabel || '原文链接';
                     }
-                    // 相关材料用白色风格
                     if (data.linkLabel === '相关材料') {
                         modalLink.classList.add('white-style');
                     } else {
@@ -1838,7 +984,6 @@
                     modalLink.classList.remove('white-style');
                 }
 
-                // 构建分类标签表格
                 let tagHTML = '';
                 if (data.themeClass) tagHTML += `<span class="compact-label">主题分类</span><span class="compact-value">${data.themeClass}</span>`;
                 if (data.purpose) tagHTML += `<span class="compact-label">目的</span><span class="compact-value">${data.purpose}</span>`;
@@ -1868,27 +1013,20 @@
                     </div>
                     <div class="compact-section">
                         <h4>分类标签</h4>
-                        <div class="compact-grid">
-                            ${tagHTML}
-                        </div>
+                        <div class="compact-grid">${tagHTML}</div>
                     </div>
                 `;
-
                 document.getElementById('modalOverlay').classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
         })();
 
-        // ========== Tab切换逻辑 ==========
+        // Tab 切换
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const tabId = this.dataset.tab;
-
-                // 切换按钮状态
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-
-                // 切换内容
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
                 document.getElementById(tabId + 'Tab').classList.add('active');
             });
